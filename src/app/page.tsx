@@ -11,7 +11,38 @@ import {
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
+  Treemap,
 } from 'recharts'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function TreemapContent({ x, y, width, height, name, depth, colors, index, root }: any) {
+  if (width < 30 || height < 20) return null
+  // Find top-level index for coloring
+  let colorIdx = index ?? 0
+  if (depth === 2 && root?.children) {
+    let acc = 0
+    for (let i = 0; i < root.children.length; i++) {
+      const childCount = root.children[i].children?.length ?? 1
+      if (index < acc + childCount) { colorIdx = i; break }
+      acc += childCount
+    }
+  }
+  const fill = depth === 1
+    ? (colors ?? CHART_COLORS)[index % (colors ?? CHART_COLORS).length]
+    : depth === 2
+      ? (colors ?? CHART_COLORS)[colorIdx % (colors ?? CHART_COLORS).length] + 'CC'
+      : '#8884d855'
+  return (
+    <g>
+      <rect x={x} y={y} width={width} height={height} fill={fill} stroke="#fff" strokeWidth={depth === 1 ? 2 : 1} rx={2} />
+      {width > 50 && height > 25 && (
+        <text x={x + width / 2} y={y + height / 2} textAnchor="middle" dominantBaseline="central" fontSize={depth === 1 ? 12 : 10} fill="#fff" fontWeight={depth === 1 ? 700 : 400}>
+          {name?.length > Math.floor(width / 7) ? name.slice(0, Math.floor(width / 7)) + '…' : name}
+        </text>
+      )}
+    </g>
+  )
+}
 
 export default function HomePage() {
   const { data, isLoading } = useFilteredQuery('/api/dashboard/home')
@@ -131,6 +162,40 @@ export default function HomePage() {
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
+
+        {/* Row 5: Capability Hierarchy Treemap */}
+        {data?.sunburst?.children?.length > 0 && (
+          <ChartContainer title="Mapa Jerárquico de Capacidades" subtitle="Tamaño por cantidad de aplicaciones vinculadas" height="h-[500px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <Treemap
+                data={data.sunburst.children}
+                dataKey="value"
+                nameKey="name"
+                stroke="#fff"
+                content={<TreemapContent colors={CHART_COLORS} />}
+              >
+                <Tooltip formatter={(v: any) => [`${v} apps`, 'Aplicaciones']} />
+              </Treemap>
+            </ResponsiveContainer>
+          </ChartContainer>
+        )}
+
+        {/* Row 6: Process Hierarchy Treemap */}
+        {data?.treemap?.children?.length > 0 && (
+          <ChartContainer title="Mapa Jerárquico de Procesos" subtitle="Tamaño por cantidad de componentes vinculados" height="h-[500px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <Treemap
+                data={data.treemap.children}
+                dataKey="value"
+                nameKey="name"
+                stroke="#fff"
+                content={<TreemapContent colors={['#EA352C', '#44546A', '#FAE44C', '#28A745', '#6F42C1', '#FD7E14', '#20C997', '#E83E8C']} />}
+              >
+                <Tooltip formatter={(v: any) => [`${v} componentes`, 'Componentes']} />
+              </Treemap>
+            </ResponsiveContainer>
+          </ChartContainer>
+        )}
       </div>
     </div>
   )
