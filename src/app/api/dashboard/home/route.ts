@@ -140,24 +140,30 @@ export async function GET(request: NextRequest) {
     count: t._count.tbl_componente_logico,
   }))
 
-  // Transform sunburst data
+  // Transform sunburst data (with fill colors for SunburstChart)
+  const SUNBURST_COLORS = ['#EA352C', '#44546A', '#FAE44C', '#28A745', '#6F42C1', '#FD7E14', '#20C997', '#E83E8C', '#17A2B8', '#6C757D']
   const sunburstData = {
     name: 'Capacidades',
-    children: capabilityHierarchy.map((cap1) => ({
-      name: cap1.nombre,
-      children: cap1.cat_capacidad_nivel_2.map((cap2) => ({
-        name: cap2.nombre,
-        children: cap2.cat_capacidad_nivel_3.map((cap3) => {
-          const appIds = new Set<number>()
-          cap3.rel_subproceso_capacidad_nvl_3.forEach((rel) => {
-            rel.cat_subproceso.rel_componente_log_subproceso.forEach((r) => {
-              appIds.add(r.tbl_componente_logico.id_aplicacion)
+    children: capabilityHierarchy.map((cap1, i) => {
+      const baseColor = SUNBURST_COLORS[i % SUNBURST_COLORS.length]
+      return {
+        name: cap1.nombre,
+        fill: baseColor,
+        children: cap1.cat_capacidad_nivel_2.map((cap2) => ({
+          name: cap2.nombre,
+          fill: baseColor + 'CC',
+          children: cap2.cat_capacidad_nivel_3.map((cap3) => {
+            const appIds = new Set<number>()
+            cap3.rel_subproceso_capacidad_nvl_3.forEach((rel) => {
+              rel.cat_subproceso.rel_componente_log_subproceso.forEach((r) => {
+                appIds.add(r.tbl_componente_logico.id_aplicacion)
+              })
             })
-          })
-          return { name: cap3.nombre, value: Math.max(appIds.size, 1) }
-        }),
-      })),
-    })),
+            return { name: cap3.nombre, fill: baseColor + '88', value: Math.max(appIds.size, 1) }
+          }),
+        })),
+      }
+    }),
   }
 
   // Transform treemap data

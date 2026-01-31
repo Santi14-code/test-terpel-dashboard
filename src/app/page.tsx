@@ -13,6 +13,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
   Treemap,
 } from 'recharts'
+import { SunburstChart } from 'recharts'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function TreemapContent({ x, y, width, height, name, depth, colors, index, root }: any) {
@@ -163,20 +164,12 @@ export default function HomePage() {
           </ResponsiveContainer>
         </ChartContainer>
 
-        {/* Row 5: Capability Hierarchy Treemap */}
+        {/* Row 5: Capability Hierarchy Sunburst */}
         {data?.sunburst?.children?.length > 0 && (
           <ChartContainer title="Mapa Jerárquico de Capacidades" subtitle="Tamaño por cantidad de aplicaciones vinculadas" height="h-[500px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <Treemap
-                data={data.sunburst.children}
-                dataKey="value"
-                nameKey="name"
-                stroke="#fff"
-                content={<TreemapContent colors={CHART_COLORS} />}
-              >
-                <Tooltip formatter={(v: any) => [`${v} apps`, 'Aplicaciones']} />
-              </Treemap>
-            </ResponsiveContainer>
+            <SunburstChart data={data.sunburst} dataKey="value" nameKey="name" innerRadius={40} outerRadius={220} stroke="#fff" width="100%" height="100%" responsive>
+              <Tooltip formatter={(v: any) => [`${v} apps`, 'Aplicaciones']} />
+            </SunburstChart>
           </ChartContainer>
         )}
 
