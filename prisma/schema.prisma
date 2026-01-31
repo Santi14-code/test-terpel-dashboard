@@ -1,0 +1,434 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["reestructuracion"]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_capacidad {
+  id_capacidad          Int                     @id(map: "pk_capacidad") @default(autoincrement())
+  nombre                String                  @unique(map: "UQ_NOMBRE_CAP") @db.VarChar(100)
+  nivel                 String?                 @db.VarChar(50)
+  fecha_creacion        DateTime                @default(now()) @db.Timestamp(6)
+  fecha_modificacion    DateTime                @default(now()) @db.Timestamp(6)
+  cat_capacidad_nivel_2 cat_capacidad_nivel_2[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_capacidad_nivel_2 {
+  id_capacidad_nivel_2  Int                     @id(map: "pk_capacidad_nivel_2") @default(autoincrement())
+  id_capacidad          Int
+  nombre                String                  @unique(map: "UQ_NOMBRE_CAP_NIVEL2") @db.VarChar(100)
+  nivel                 String?                 @db.VarChar(50)
+  fecha_creacion        DateTime                @default(now()) @db.Timestamp(6)
+  fecha_modificacion    DateTime                @default(now()) @db.Timestamp(6)
+  cat_capacidad         cat_capacidad           @relation(fields: [id_capacidad], references: [id_capacidad], onDelete: NoAction, onUpdate: NoAction, map: "fk_capacidad_nvl2_capacidad")
+  cat_capacidad_nivel_3 cat_capacidad_nivel_3[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_capacidad_nivel_3 {
+  id_capacidad_nivel_3           Int                              @id(map: "pk_capacidad_nivel_3") @default(autoincrement())
+  id_capacidad_nivel_2           Int
+  nombre                         String                           @unique(map: "UQ_NOMBRE_CAP_NIVEL3") @db.VarChar(300)
+  nivel                          String?                          @db.VarChar(50)
+  fecha_creacion                 DateTime                         @default(now()) @db.Timestamp(6)
+  fecha_modificacion             DateTime                         @default(now()) @db.Timestamp(6)
+  cat_capacidad_nivel_2          cat_capacidad_nivel_2            @relation(fields: [id_capacidad_nivel_2], references: [id_capacidad_nivel_2], onDelete: NoAction, onUpdate: NoAction, map: "fk_capacidad_nvl3_nvl2")
+  rel_subproceso_capacidad_nvl_3 rel_subproceso_capacidad_nvl_3[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_comp_logico_tipo_atributo {
+  id_comp_logico_tipo_atributo  Int                             @id(map: "pk_comp_logico_tipo_atributo") @default(autoincrement())
+  categoria                     String                          @db.VarChar(50)
+  nombre                        String                          @db.VarChar(100)
+  descripcion                   String                          @db.VarChar(500)
+  fecha_creacion                DateTime                        @default(now()) @db.Timestamp(6)
+  fecha_modificacion            DateTime                        @default(now()) @db.Timestamp(6)
+  tbl_com_logico_atributo_valor tbl_com_logico_atributo_valor[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_componente_despliegue_tipo {
+  id_componente_despliegue_tipo Int                         @id(map: "pk_componente_despliegue_tipo") @default(autoincrement())
+  nombre_tipo                   String                      @db.VarChar(100)
+  descripcion                   String?                     @db.VarChar(500)
+  fecha_creacion                DateTime                    @default(now()) @db.Timestamp(6)
+  fecha_modificacion            DateTime                    @default(now()) @db.Timestamp(6)
+  tbl_componente_despliegue     tbl_componente_despliegue[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_componente_logico_tipo {
+  id_componente_logico_tipo Int                     @id(map: "pk_componente_logico_tipo") @default(autoincrement())
+  nombre_tipo               String                  @db.VarChar(100)
+  descripcion               String                  @db.VarChar(500)
+  fecha_creacion            DateTime                @default(now()) @db.Timestamp(6)
+  fecha_modificacion        DateTime                @default(now()) @db.Timestamp(6)
+  tbl_componente_logico     tbl_componente_logico[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_entorno {
+  id_entorno                Int                         @id(map: "pk_entorno") @default(autoincrement())
+  nombre                    String                      @unique(map: "UQ_NOMBRE_ENTORNO") @db.VarChar(100)
+  descripcion               String                      @db.VarChar(500)
+  fecha_creacion            DateTime                    @default(now()) @db.Timestamp(6)
+  fecha_modificacion        DateTime                    @default(now()) @db.Timestamp(6)
+  tbl_componente_despliegue tbl_componente_despliegue[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_estado {
+  id_estado          Int              @id(map: "pk_estado") @default(autoincrement())
+  nombre             String           @unique(map: "UQ_NOMBRE_ESTADO") @db.VarChar(100)
+  descripcion        String           @db.VarChar(500)
+  fecha_creacion     DateTime         @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime         @default(now()) @db.Timestamp(6)
+  tbl_aplicacion     tbl_aplicacion[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_interface_atributo {
+  id_interface_atributo       Int                           @id(map: "pk_interface_atributo") @default(autoincrement())
+  nombre_atributo             String                        @unique(map: "UQ_NOMBRE_ATRIBUTO") @db.VarChar(100)
+  descripcion                 String                        @db.VarChar(500)
+  tipo                        String                        @db.VarChar(50)
+  orden                       Int
+  fecha_creacion              DateTime                      @default(now()) @db.Timestamp(6)
+  fecha_modificacion          DateTime                      @default(now()) @db.Timestamp(6)
+  obligatorio                 String                        @db.VarChar(10)
+  tbl_interfaz_atributo_valor tbl_interfaz_atributo_valor[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_linea_negocio {
+  id_linea_negocio             Int                            @id(map: "pk_linea_negocio") @default(autoincrement())
+  id_linea_negocio_principal   Int
+  tipo_linea_negocio           String                         @unique(map: "UQ_TIPO_LINEA_NEGOCIO") @db.VarChar(100)
+  fecha_creacion               DateTime                       @default(now()) @db.Timestamp(6)
+  fecha_modificacion           DateTime                       @default(now()) @db.Timestamp(6)
+  cat_linea_negocio_principal  cat_linea_negocio_principal    @relation(fields: [id_linea_negocio_principal], references: [id_linea_negocio_principal], onDelete: NoAction, onUpdate: NoAction, map: "fk_linea_negocio_principal")
+  rel_subproceso_linea_negocio rel_subproceso_linea_negocio[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_linea_negocio_principal {
+  id_linea_negocio_principal Int                 @id(map: "pk_linea_negocio_principal") @default(autoincrement())
+  descripcion                String              @unique(map: "UQ_DESCRIPCION_LINEA_NEGOCIO_PRINCIPAL") @db.VarChar(500)
+  fecha_creacion             DateTime            @default(now()) @db.Timestamp(6)
+  fecha_modificacion         DateTime            @default(now()) @db.Timestamp(6)
+  cat_linea_negocio          cat_linea_negocio[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_macroproceso {
+  id_macroproceso    Int           @id(map: "pk_macroproceso") @default(autoincrement())
+  nombre             String        @unique(map: "UQ_NOMBRE_MACROPROCESO") @db.VarChar(300)
+  categoria          String        @db.VarChar(50)
+  fecha_creacion     DateTime      @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime      @default(now()) @db.Timestamp(6)
+  cat_proceso        cat_proceso[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_modelo_servicio {
+  id_modelo_servicio Int              @id(map: "pk_modelo_servicio") @default(autoincrement())
+  nombre             String           @unique(map: "UQ_NOMBRE_MODELO_SERVICIO") @db.VarChar(100)
+  descripcion        String           @db.VarChar(500)
+  fecha_creacion     DateTime         @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime         @default(now()) @db.Timestamp(6)
+  tbl_aplicacion     tbl_aplicacion[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_plataforma {
+  id_plataforma             Int                         @id(map: "pk_plataforma") @default(autoincrement())
+  nombre                    String                      @unique(map: "UQ_NOMBRE_PLATAFORMA") @db.VarChar(100)
+  descripcion               String                      @db.VarChar(500)
+  fecha_creacion            DateTime                    @default(now()) @db.Timestamp(6)
+  fecha_modificacion        DateTime                    @default(now()) @db.Timestamp(6)
+  tbl_componente_despliegue tbl_componente_despliegue[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_proceso {
+  id_proceso         Int              @id(map: "pk_proceso") @default(autoincrement())
+  id_macroproceso    Int
+  nombre             String           @unique(map: "UQ_NOMBRE_PROCESO") @db.VarChar(300)
+  fecha_creacion     DateTime         @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime         @default(now()) @db.Timestamp(6)
+  cat_macroproceso   cat_macroproceso @relation(fields: [id_macroproceso], references: [id_macroproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_proceso_macroproceso")
+  cat_subproceso     cat_subproceso[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_subproceso {
+  id_subproceso                  Int                              @id(map: "pk_subproceso") @default(autoincrement())
+  id_proceso                     Int
+  nivel                          String?                          @db.VarChar(50)
+  nombre                         String?                          @db.VarChar(500)
+  fecha_creacion                 DateTime                         @default(now()) @db.Timestamp(6)
+  fecha_modificacion             DateTime                         @default(now()) @db.Timestamp(6)
+  cat_proceso                    cat_proceso                      @relation(fields: [id_proceso], references: [id_proceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subproceso_proceso")
+  rel_componente_log_subproceso  rel_componente_log_subproceso[]
+  rel_subproceso_capacidad_nvl_3 rel_subproceso_capacidad_nvl_3[]
+  rel_subproceso_linea_negocio   rel_subproceso_linea_negocio[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_tecnologia {
+  id_tecnologia         Int                     @id(map: "pk_tecnologia") @default(autoincrement())
+  nombre                String                  @db.VarChar(100)
+  descripcion           String?                 @db.VarChar(500)
+  categoria             String?                 @db.VarChar(50)
+  fecha_creacion        DateTime                @default(now()) @db.Timestamp(6)
+  fecha_modificacion    DateTime                @default(now()) @db.Timestamp(6)
+  tbl_componente_logico tbl_componente_logico[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model cat_tipo_interfaz {
+  id_tipo_interfaz   Int            @id(map: "pk_tipo_interfaz") @default(autoincrement())
+  nombre_tipo        String         @unique(map: "UQ_NOMBRE_TIPO_INTERFAZ") @db.VarChar(100)
+  descripcion        String         @db.VarChar(500)
+  fecha_creacion     DateTime       @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime       @default(now()) @db.Timestamp(6)
+  tbl_interfaz       tbl_interfaz[]
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model rel_com_interfaz_consumo {
+  id_interfaz_consumo   Int                   @id(map: "pk_com_interfaz_consumo") @default(autoincrement())
+  id_interfaz           Int
+  id_componente_logico  Int
+  fecha_creacion        DateTime              @default(now()) @db.Timestamp(6)
+  fecha_modificacion    DateTime              @default(now()) @db.Timestamp(6)
+  tbl_interfaz          tbl_interfaz          @relation(fields: [id_interfaz], references: [id_interfaz], onDelete: NoAction, onUpdate: NoAction, map: "fk_consumo_interfaz")
+  tbl_componente_logico tbl_componente_logico @relation(fields: [id_componente_logico], references: [id_componente_logico], onDelete: NoAction, onUpdate: NoAction, map: "fk_consumo_interfaz_comp_log")
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model rel_componente_log_despliegue {
+  id_componente_log_despliegue Int                       @id(map: "pk_componente_log_despliegue") @default(autoincrement())
+  id_componente_logico         Int
+  id_componente_despliegue     Int
+  fecha_creacion               DateTime                  @default(now()) @db.Timestamp(6)
+  fecha_modificacion           DateTime                  @default(now()) @db.Timestamp(6)
+  tbl_componente_despliegue    tbl_componente_despliegue @relation(fields: [id_componente_despliegue], references: [id_componente_despliegue], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_log_desp_comp_desp")
+  tbl_componente_logico        tbl_componente_logico     @relation(fields: [id_componente_logico], references: [id_componente_logico], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_log_desp_comp_log")
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model rel_componente_log_subproceso {
+  id_componente_log_subproceso Int                   @id(map: "pk_id_componente_log_subproceso") @default(autoincrement())
+  id_componente_logico         Int
+  id_subproceso                Int
+  tipo_relacion                String                @db.VarChar(100)
+  fecha_creacion               DateTime              @default(now()) @db.Timestamp(6)
+  fecha_modificacion           DateTime              @default(now()) @db.Timestamp(6)
+  tbl_componente_logico        tbl_componente_logico @relation(fields: [id_componente_logico], references: [id_componente_logico], onDelete: NoAction, onUpdate: NoAction, map: "fk_componente_log_subproceso_componente_log")
+  cat_subproceso               cat_subproceso        @relation(fields: [id_subproceso], references: [id_subproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_componente_log_subproceso_subproceso")
+
+  @@index([id_componente_logico], map: "idx_componente_log_subcapacidad_logico")
+  @@index([id_subproceso], map: "idx_componente_log_subcapacidad_subproceso")
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model rel_subproceso_capacidad_nvl_3 {
+  id_subproceso_capacidad_nvl_3 Int                   @id(map: "pk_subproceso_capacidad_nvl_3") @default(autoincrement())
+  id_subproceso                 Int
+  id_capacidad_nivel_3          Int
+  fecha_creacion                DateTime              @default(now()) @db.Timestamp(6)
+  fecha_modificacion            DateTime              @default(now()) @db.Timestamp(6)
+  cat_capacidad_nivel_3         cat_capacidad_nivel_3 @relation(fields: [id_capacidad_nivel_3], references: [id_capacidad_nivel_3], onDelete: NoAction, onUpdate: NoAction, map: "fk_subproc_cap_nvl3_capacidad")
+  cat_subproceso                cat_subproceso        @relation(fields: [id_subproceso], references: [id_subproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subproc_cap_nvl3_subproc")
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model rel_subproceso_linea_negocio {
+  id_subproceso_linea_negocio Int               @id(map: "pk_subproceso_linea_negocio") @default(autoincrement())
+  id_subproceso               Int
+  id_linea_negocio            Int
+  fecha_creacion              DateTime          @default(now()) @db.Timestamp(6)
+  fecha_modificacion          DateTime          @default(now()) @db.Timestamp(6)
+  cat_linea_negocio           cat_linea_negocio @relation(fields: [id_linea_negocio], references: [id_linea_negocio], onDelete: NoAction, onUpdate: NoAction, map: "fk_subproc_ln_linea_negocio")
+  cat_subproceso              cat_subproceso    @relation(fields: [id_subproceso], references: [id_subproceso], onDelete: NoAction, onUpdate: NoAction, map: "fk_subproc_ln_subproceso")
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_aplicacion {
+  id_aplicacion         Int                     @id(map: "pk_aplicacion") @default(autoincrement())
+  id_modelo_servicio    Int
+  id_estado             Int
+  nombre                String                  @unique(map: "UQ_NOMBRE_APLICACION") @db.VarChar(100)
+  descripcion           String                  @db.VarChar(500)
+  proveedor             String?                 @db.VarChar(200)
+  fabricante            String?                 @db.VarChar(200)
+  criticidad            String?                 @db.VarChar(50)
+  responsable           String?                 @db.VarChar(200)
+  fecha_creacion        DateTime                @default(now()) @db.Timestamp(6)
+  fecha_modificacion    DateTime                @default(now()) @db.Timestamp(6)
+  cat_estado            cat_estado              @relation(fields: [id_estado], references: [id_estado], onDelete: NoAction, onUpdate: NoAction, map: "fk_aplicacion_estado")
+  cat_modelo_servicio   cat_modelo_servicio     @relation(fields: [id_modelo_servicio], references: [id_modelo_servicio], onDelete: NoAction, onUpdate: NoAction, map: "fk_aplicacion_modelo_servicio")
+  tbl_componente_logico tbl_componente_logico[]
+  tbl_interfaz          tbl_interfaz[]
+
+  @@index([id_estado], map: "idx_aplicacion_estado")
+  @@index([fecha_modificacion], map: "idx_aplicacion_fecha_mod")
+  @@index([nombre], map: "idx_aplicacion_nombre")
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_com_logico_atributo_valor {
+  id_com_logico_atributo_valor  Int                           @id(map: "pk_com_logico_atributo_valor") @default(autoincrement())
+  id_componente_logico          Int
+  id_comp_logico_tipo_atributo  Int
+  valor                         String
+  fecha_creacion                DateTime                      @default(now()) @db.Timestamp(6)
+  fecha_modificacion            DateTime                      @default(now()) @db.Timestamp(6)
+  tbl_componente_logico         tbl_componente_logico         @relation(fields: [id_componente_logico], references: [id_componente_logico], onDelete: NoAction, onUpdate: NoAction, map: "fk_com_log_atrib_val_comp_log")
+  cat_comp_logico_tipo_atributo cat_comp_logico_tipo_atributo @relation(fields: [id_comp_logico_tipo_atributo], references: [id_comp_logico_tipo_atributo], onDelete: NoAction, onUpdate: NoAction, map: "fk_com_log_atrib_val_tipo")
+
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_componente_despliegue {
+  id_componente_despliegue       Int                             @id(map: "pk_componente_despliegue") @default(autoincrement())
+  id_componente_despliegue_tipo  Int
+  id_entorno                     Int
+  id_plataforma                  Int
+  replicas                       Int?                            @db.SmallInt
+  componente                     String?                         @db.VarChar(200)
+  descripcion                    String?                         @db.VarChar(500)
+  fecha_creacion                 DateTime                        @default(now()) @db.Timestamp(6)
+  fecha_modificacion             DateTime                        @default(now()) @db.Timestamp(6)
+  rel_componente_log_despliegue  rel_componente_log_despliegue[]
+  cat_entorno                    cat_entorno                     @relation(fields: [id_entorno], references: [id_entorno], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_desp_entorno")
+  cat_plataforma                 cat_plataforma                  @relation(fields: [id_plataforma], references: [id_plataforma], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_desp_plataforma")
+  cat_componente_despliegue_tipo cat_componente_despliegue_tipo  @relation(fields: [id_componente_despliegue_tipo], references: [id_componente_despliegue_tipo], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_desp_tipo")
+
+  @@index([id_entorno, id_plataforma], map: "idx_comp_desp_entorno_plat")
+  @@schema("reestructuracion")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_componente_logico {
+  id_componente_logico          Int                             @id(map: "pk_componente_logico") @default(autoincrement())
+  id_aplicacion                 Int
+  id_tecnologia                 Int?
+  id_componente_logico_tipo     Int
+  nombre                        String                          @unique(map: "UQ_NOMBRE_COMPONENTE_LOGICO") @db.VarChar(100)
+  descripcion                   String                          @db.VarChar(500)
+  estado                        Int?                            @db.SmallInt
+  version                       String?                         @db.VarChar(50)
+  repositorio                   String?                         @db.VarChar(500)
+  url_documentacion             String?                         @db.VarChar(500)
+  fecha_creacion                DateTime                        @default(now()) @db.Timestamp(6)
+  fecha_modificacion            DateTime                        @default(now()) @db.Timestamp(6)
+  is_contiene_datos_personales  String?                         @db.VarChar(10)
+  rel_com_interfaz_consumo      rel_com_interfaz_consumo[]
+  rel_componente_log_despliegue rel_componente_log_despliegue[]
+  rel_componente_log_subproceso rel_componente_log_subproceso[]
+  tbl_com_logico_atributo_valor tbl_com_logico_atributo_valor[]
+  tbl_aplicacion                tbl_aplicacion                  @relation(fields: [id_aplicacion], references: [id_aplicacion], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_log_aplicacion")
+  cat_tecnologia                cat_tecnologia?                 @relation(fields: [id_tecnologia], references: [id_tecnologia], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_log_tecnologia")
+  cat_componente_logico_tipo    cat_componente_logico_tipo      @relation(fields: [id_componente_logico_tipo], references: [id_componente_logico_tipo], onDelete: NoAction, onUpdate: NoAction, map: "fk_comp_log_tipo")
+  tbl_interfaz                  tbl_interfaz[]
+
+  @@index([id_aplicacion], map: "idx_comp_log_aplicacion")
+  @@index([fecha_modificacion], map: "idx_comp_logico_fecha_mod")
+  @@index([estado], map: "idx_componente_logico_estado")
+  @@index([nombre], map: "idx_componente_logico_nombre")
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_interfaz {
+  id_interfaz                 Int                           @id(map: "pk_interfaz") @default(autoincrement())
+  id_componente_logico        Int?
+  id_tipo_interfaz            Int
+  nombre_interfaz             String                        @db.VarChar(100)
+  descripcion                 String?                       @db.VarChar(500)
+  estado                      String?                       @db.VarChar(50)
+  fecha_creacion              DateTime                      @default(now()) @db.Timestamp(6)
+  fecha_modificacion          DateTime                      @default(now()) @db.Timestamp(6)
+  id_aplicacion               Int?
+  rel_com_interfaz_consumo    rel_com_interfaz_consumo[]
+  tbl_aplicacion              tbl_aplicacion?               @relation(fields: [id_aplicacion], references: [id_aplicacion], onDelete: NoAction, onUpdate: NoAction, map: "fk_interfaz_aplicacion")
+  tbl_componente_logico       tbl_componente_logico?        @relation(fields: [id_componente_logico], references: [id_componente_logico], onDelete: NoAction, onUpdate: NoAction, map: "fk_interfaz_componente_logico")
+  cat_tipo_interfaz           cat_tipo_interfaz             @relation(fields: [id_tipo_interfaz], references: [id_tipo_interfaz], onDelete: NoAction, onUpdate: NoAction, map: "fk_interfaz_tipo_interfaz")
+  tbl_interfaz_atributo_valor tbl_interfaz_atributo_valor[]
+
+  @@index([id_componente_logico], map: "idx_interfaz_componente")
+  @@index([nombre_interfaz], map: "idx_interfaz_nombre")
+  @@schema("reestructuracion")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbl_interfaz_atributo_valor {
+  id_interfaz_atributo_valor Int                    @id(map: "pk_interfaz_atributo_valor") @default(autoincrement())
+  id_interface_atributo      Int
+  id_interfaz                Int
+  valor                      String
+  fecha_creacion             DateTime               @default(now()) @db.Timestamp(6)
+  fecha_modificacion         DateTime               @default(now()) @db.Timestamp(6)
+  cat_interface_atributo     cat_interface_atributo @relation(fields: [id_interface_atributo], references: [id_interface_atributo], onDelete: NoAction, onUpdate: NoAction, map: "fk_interfaz_atrib_val_atrib")
+  tbl_interfaz               tbl_interfaz           @relation(fields: [id_interfaz], references: [id_interfaz], onDelete: NoAction, onUpdate: NoAction, map: "fk_interfaz_atrib_val_interfaz")
+
+  @@schema("reestructuracion")
+}

@@ -1,65 +1,137 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useFilteredQuery } from '@/hooks/useFilteredQuery'
+import { Header } from '@/components/layout/Header'
+import { KPICard } from '@/components/charts/KPICard'
+import { ChartContainer } from '@/components/charts/ChartContainer'
+import { CRITICALITY_COLORS, CHART_COLORS, formatNumber } from '@/lib/utils'
+import {
+  Monitor, Puzzle, Cpu, RefreshCw, ClipboardList, Pin,
+} from 'lucide-react'
+import {
+  PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
+} from 'recharts'
+
+export default function HomePage() {
+  const { data, isLoading } = useFilteredQuery('/api/dashboard/home')
+
+  if (isLoading) {
+    return (
+      <div className="flex-1">
+        <Header title="Dashboard Principal" />
+        <div className="p-6">
+          <div className="grid grid-cols-6 gap-4 mb-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-lg border border-border p-4 h-24 animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const kpis = data?.kpis
+  const kpiCards = [
+    { label: 'Aplicaciones', value: kpis?.apps ?? 0, icon: Monitor },
+    { label: 'Componentes', value: kpis?.componentes ?? 0, icon: Puzzle },
+    { label: 'Tecnologias', value: kpis?.tecnologias ?? 0, icon: Cpu },
+    { label: 'Macroprocesos', value: kpis?.macroprocesos ?? 0, icon: RefreshCw },
+    { label: 'Procesos', value: kpis?.procesos ?? 0, icon: ClipboardList },
+    { label: 'Subprocesos', value: kpis?.subprocesos ?? 0, icon: Pin },
+  ]
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex-1">
+      <Header title="Dashboard Principal" />
+      <div className="p-6 space-y-6">
+        {/* KPI Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {kpiCards.map((kpi) => (
+            <KPICard key={kpi.label} label={kpi.label} value={formatNumber(kpi.value)} icon={kpi.icon} />
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Row 2: Criticality + Top 10 */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <ChartContainer title="Criticidad de Aplicaciones" subtitle="Distribucion por nivel">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data?.criticality}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  dataKey="value"
+                  nameKey="name"
+                  label={({ name, value }) => `${name}: ${value}`}
+                >
+                  {data?.criticality?.map((entry: { name: string }, i: number) => (
+                    <Cell
+                      key={i}
+                      fill={CRITICALITY_COLORS[entry.name] || CHART_COLORS[i % CHART_COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+
+          <ChartContainer title="Top 10 Apps por Componentes">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data?.topAppsByComponents} layout="vertical" margin={{ left: 100 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis type="category" dataKey="name" width={95} tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="components" fill="#EA352C" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+
+          <ChartContainer title="Tecnologias Mas Utilizadas" subtitle="Top 20">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data?.techUsage?.slice(0, 10)} layout="vertical" margin={{ left: 100 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis type="category" dataKey="name" width={95} tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="count" fill="#44546A" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
-      </main>
+
+        {/* Row 3: Full-width tech bar */}
+        <ChartContainer title="Todas las Tecnologias" subtitle="Top 20 por numero de componentes">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data?.techUsage} margin={{ bottom: 60 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" angle={-45} textAnchor="end" tick={{ fontSize: 10 }} interval={0} />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#EA352C" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+
+        {/* Row 4: Macroprocess Coverage */}
+        <ChartContainer title="Cobertura de Macroprocesos" subtitle="Subprocesos cubiertos vs sin cobertura" height="h-96">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data?.macroprocessCoverage} margin={{ bottom: 80 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" angle={-45} textAnchor="end" tick={{ fontSize: 9 }} interval={0} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="covered" stackId="a" fill="#28A745" name="Cubiertos" />
+              <Bar dataKey="uncovered" stackId="a" fill="#EA352C" name="Sin cobertura" />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </div>
     </div>
-  );
+  )
 }
