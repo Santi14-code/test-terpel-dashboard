@@ -167,9 +167,11 @@ export default function HomePage() {
         {/* Row 5: Capability Hierarchy Sunburst */}
         {data?.sunburst?.children?.length > 0 && (
           <ChartContainer title="Mapa Jerárquico de Capacidades" subtitle="Tamaño por cantidad de aplicaciones vinculadas" height="h-[500px]">
-            <SunburstChart data={data.sunburst} dataKey="value" nameKey="name" innerRadius={40} outerRadius={220} stroke="#fff" width="100%" height="100%" responsive>
-              <Tooltip formatter={(v: any) => [`${v} apps`, 'Aplicaciones']} />
-            </SunburstChart>
+            <div style={{ width: '100%', height: '100%' }}>
+              <SunburstChart data={data.sunburst} dataKey="value" nameKey="name" innerRadius={30} outerRadius={200} stroke="#fff" responsive>
+                <Tooltip formatter={(v: any) => [`${v} apps`, 'Aplicaciones']} />
+              </SunburstChart>
+            </div>
           </ChartContainer>
         )}
 
