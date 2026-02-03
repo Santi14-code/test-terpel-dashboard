@@ -40,6 +40,7 @@ jobs:
           api_location: ""
           output_location: ".next"
           app_build_command: "npm run build"
+          skip_api_build: true
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
