@@ -7,7 +7,9 @@ First, run the development server:
 ```bash
 npm install
 npx prisma generate
+
 # and
+
 npm run dev
 # or
 yarn dev
