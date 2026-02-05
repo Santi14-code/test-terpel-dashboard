@@ -118,7 +118,7 @@ async function generatePlantUMLDiagram() {
     let puml = '@startuml\n'
     puml += '!theme plain\n'
     puml += 'top to bottom direction\n'
-    puml += 'scale max 1200 width\n'
+    puml += 'scale max 800 width\n'
     puml += 'title Vista Combustible-Aviación\\nCapacidades y Aplicaciones\n\n'
     puml += 'skinparam packageStyle rectangle\n'
     puml += 'skinparam nodesep 20\n'

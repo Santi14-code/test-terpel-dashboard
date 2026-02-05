@@ -136,7 +136,7 @@ export async function GET(request: NextRequest) {
     let puml = '@startuml\n'
     puml += '!theme plain\n'
     puml += 'top to bottom direction\n'
-    puml += 'scale max 1200 width\n'
+    puml += 'scale max 800 width\n'
     puml += 'title Vista Arquitectónica\\nCapacidades y Aplicaciones\n\n'
     puml += 'skinparam packageStyle rectangle\n'
     puml += 'skinparam nodesep 20\n'
