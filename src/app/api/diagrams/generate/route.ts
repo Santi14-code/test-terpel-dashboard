@@ -138,6 +138,8 @@ export async function GET(request: NextRequest) {
     puml += 'top to bottom direction\n'
     puml += 'title Vista Arquitectónica\\nCapacidades y Aplicaciones\n\n'
     puml += 'skinparam packageStyle rectangle\n'
+    puml += 'skinparam nodesep 20\n'
+    puml += 'skinparam ranksep 80\n'
     puml += 'skinparam component {\n'
     puml += '  BackgroundColor<<L1>> #FFE4B5\n'
     puml += '  BackgroundColor<<L2>> #FFD700\n'
@@ -165,37 +167,37 @@ export async function GET(request: NextRequest) {
     })
 
     // Generate L1 Capabilities
-    puml += 'package "Capacidades Nivel 1" {\n'
+    puml += "' Capacidades Nivel 1\n"
     cap1.forEach((c) => {
       const id = generatePlantUMLId('L1', c.id_capacidad, c.nombre)
-      puml += `  [${c.nombre}] <<L1>> as ${id}\n`
+      puml += `[${c.nombre}] <<L1>> as ${id}\n`
     })
-    puml += '}\n\n'
+    puml += '\n'
 
     // Generate L2 Capabilities
-    puml += 'package "Capacidades Nivel 2" {\n'
+    puml += "' Capacidades Nivel 2\n"
     cap2.forEach((c) => {
       const id = generatePlantUMLId('L2', c.id_capacidad_nivel_2, c.nombre)
-      puml += `  [${c.nombre}] <<L2>> as ${id}\n`
+      puml += `[${c.nombre}] <<L2>> as ${id}\n`
     })
-    puml += '}\n\n'
+    puml += '\n'
 
     // Generate L3 Capabilities
-    puml += 'package "Capacidades Nivel 3" {\n'
+    puml += "' Capacidades Nivel 3\n"
     cap3.forEach((c) => {
       const id = generatePlantUMLId('L3', c.id_capacidad_nivel_3, c.nombre)
-      puml += `  [${c.nombre}] <<L3>> as ${id}\n`
+      puml += `[${c.nombre}] <<L3>> as ${id}\n`
     })
-    puml += '}\n\n'
+    puml += '\n'
 
     // Generate Applications
-    puml += 'package "Aplicaciones" {\n'
+    puml += "' Aplicaciones\n"
     apps.forEach((app) => {
       const id = generatePlantUMLId('APP', app.id_aplicacion, app.nombre)
       const criticidad = app.criticidad ? ` (${app.criticidad})` : ''
-      puml += `  [${app.nombre}${criticidad}] <<APP>> as ${id}\n`
+      puml += `[${app.nombre}${criticidad}] <<APP>> as ${id}\n`
     })
-    puml += '}\n\n'
+    puml += '\n'
 
     // Generate connections L1 -> L2
     puml += "' Connections L1 -> L2\n"
