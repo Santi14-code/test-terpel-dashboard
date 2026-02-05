@@ -1,69 +1,235 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Terpel Nexus Dashboard
 
-## Getting Started
+Dashboard de visualización de arquitectura empresarial para Terpel.
 
-First, run the development server:
+## 🚀 Quick Start
+
+### Desarrollo Local
 
 ```bash
-# Instalación
+# Instalar dependencias
 npm install
-npx prisma generate
 
-# Ejecución
+# Iniciar servidor de desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación estará disponible en: **http://localhost:3000**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📊 Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Dashboard Interactivo
 
-## Learn More
+- **Dashboard Principal**: KPIs, criticidad de aplicaciones, tecnologías más usadas
+- **Alineación**: Alineación de aplicaciones con capacidades de negocio
+- **Arquitectura**: Vista de componentes y sus relaciones
+- **Gestión del Cambio**: Tracking de cambios y transformaciones
+- **Costos**: Análisis de costos por aplicación y tecnología
+- **Ejecutivo**: Vista resumida para liderazgo
+- **Gobierno**: Métricas de cumplimiento y gobernanza
+- **Innovación**: Tracking de iniciativas de innovación
+- **Performance**: Métricas de rendimiento de aplicaciones
+- **Riesgos**: Análisis de riesgos tecnológicos
+- **Deuda Técnica**: Identificación y tracking de deuda técnica
 
-To learn more about Next.js, take a look at the following resources:
+### Filtros Avanzados
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Criticidad de aplicaciones
+- Estados
+- Líneas de negocio
+- Líneas de negocio principal
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📐 Generación de Diagramas ArchiMate
 
-## Deploy on Azure
-
-Esta aplicación está configurada para desplegarse en Azure usando:
-- **Azure Static Web Apps** (hosting del frontend y APIs)
-- **Azure PostgreSQL Flexible Server** (base de datos)
-
-### Inicio Rápido
+**NUEVO**: Genera diagramas ArchiMate profesionales automáticamente desde tu base de datos.
 
 ```bash
-# 1. Verificar requisitos
-./azure/verify-config.sh
-
-# 2. Provisionar recursos en Azure
-./azure/provision.sh
-
-# 3. Configurar GitHub Secrets (sigue las instrucciones del script)
-
-# 4. Desplegar
-git push
+# Generar diagrama ArchiMate
+npm run generate:archimate
 ```
 
-### Costos estimados
-- Azure Static Web Apps: $0-9/mes
-- PostgreSQL B1ms: ~$12/mes
-- **Total: $12-21/mes**
+El diagrama generado incluye:
+- ✅ Capacidades de negocio (3 niveles jerárquicos)
+- ✅ Aplicaciones del portafolio
+- ✅ Relaciones entre capacidades y aplicaciones
+- ✅ Compatible con Archi (herramienta de modelado ArchiMate)
 
-Para instrucciones detalladas, lee [azure/DEPLOYMENT.md](./azure/DEPLOYMENT.md)
+📖 **Documentación completa**: [scripts/archimate/README.md](./scripts/archimate/README.md)
 
-## Deploy on Vercel
+## 🏗️ Arquitectura
 
-También puedes desplegar en [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+### Stack Tecnológico
 
-Check out [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: Next.js 16.1.6 (App Router) + React 19
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Radix UI + Shadcn
+- **Charts**: Recharts + D3.js
+- **State Management**: Zustand
+- **Data Fetching**: TanStack Query (React Query)
+- **Backend**: Next.js API Routes
+- **ORM**: Prisma 7.3.0
+- **Database**: PostgreSQL (Azure Flexible Server)
+
+### Estructura del Proyecto
+
+```
+terpel-nexus-t/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── api/               # API Routes
+│   │   │   ├── dashboard/    # Dashboard endpoints
+│   │   │   └── filters/      # Filtros endpoint
+│   │   ├── alignment/        # Página de alineación
+│   │   ├── architecture/     # Página de arquitectura
+│   │   └── ...               # Otras páginas
+│   ├── components/           # Componentes React
+│   │   ├── charts/          # Componentes de gráficos
+│   │   ├── layout/          # Layout components
+│   │   └── ui/              # UI components (Shadcn)
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Utilidades
+│   │   ├── db.ts           # Cliente Prisma
+│   │   ├── filters.ts      # Lógica de filtros
+│   │   └── utils.ts        # Utilidades generales
+│   ├── store/              # Zustand stores
+│   └── generated/          # Código generado (Prisma)
+├── scripts/                # Scripts de utilidad
+│   └── archimate/         # Generador de diagramas ArchiMate
+├── prisma/                # Schema de Prisma
+├── output/                # Archivos generados (git ignored)
+└── public/                # Assets estáticos
+```
+
+## 📦 Scripts Disponibles
+
+```bash
+# Desarrollo
+npm run dev                  # Inicia servidor de desarrollo
+
+# Build
+npm run build               # Build de producción
+
+# Production
+npm start                   # Inicia servidor de producción
+
+# Utilidades
+npm run generate:archimate  # Genera diagramas ArchiMate
+npm run postinstall        # Genera Prisma Client (automático)
+```
+
+## 🗄️ Base de Datos
+
+La aplicación se conecta a PostgreSQL en Azure. La configuración se hace mediante la variable de entorno `DATABASE_URL`.
+
+### Schema Principal
+
+- **Aplicaciones**: `tbl_aplicacion`
+- **Componentes Lógicos**: `tbl_componente_logico`
+- **Tecnologías**: `cat_tecnologia`
+- **Capacidades**: `cat_capacidad` (3 niveles)
+- **Procesos**: `cat_macroproceso`, `cat_proceso`, `cat_subproceso`
+- **Líneas de Negocio**: `cat_linea_negocio`, `cat_linea_negocio_principal`
+
+## 🔧 Configuración
+
+### Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+DATABASE_URL="postgresql://user:password@host:5432/database?schema=schema_name&sslmode=require"
+```
+
+### Prisma
+
+El proyecto usa Prisma con:
+- **Adapter**: `@prisma/adapter-pg` para mejor compatibilidad con PostgreSQL
+- **Pool de conexiones**: Configurado para serverless
+- **Multi-schema**: Soporte para múltiples schemas en PostgreSQL
+
+## 📊 Visualizaciones
+
+El dashboard incluye diversos tipos de gráficos:
+
+- **Pie Charts**: Distribución de criticidad
+- **Bar Charts**: Top aplicaciones, tecnologías
+- **Treemaps**: Jerarquía de procesos
+- **Sunburst Charts**: Jerarquía de capacidades
+- **Stacked Bar Charts**: Cobertura de macroprocesos
+
+## 🎨 UI/UX
+
+- **Design System**: Basado en Shadcn/ui
+- **Tema**: Dark mode por defecto
+- **Responsive**: Optimizado para desktop (dashboards requieren espacio)
+- **Performance**: Lazy loading de componentes pesados
+- **Accesibilidad**: Componentes Radix UI con ARIA
+
+## 🔐 Seguridad
+
+- **Conexión SSL**: PostgreSQL con SSL requerido
+- **Environment Variables**: Credenciales nunca en código
+- **SQL Injection**: Protección vía Prisma ORM
+- **CORS**: Configurado para desarrollo local
+
+## 📈 Performance
+
+- **Server Components**: Uso de React Server Components cuando es posible
+- **Data Caching**: React Query para caché de datos
+- **Code Splitting**: Automático con Next.js
+- **Image Optimization**: Next.js Image component (con Sharp)
+
+## 🤝 Contribución
+
+Este proyecto sigue **GitHub Flow**:
+
+1. Crea un branch desde `main`
+2. Haz tus cambios
+3. Crea un Pull Request
+4. Aprueba y merge a `main`
+
+## 📝 Notas
+
+- **Node.js**: Requiere versión 20.19.0 o superior
+- **Base de datos**: Solo lectura (no modifica datos)
+- **Timezone**: Configurado para zona horaria de Colombia
+
+## 🐛 Troubleshooting
+
+### Error de conexión a base de datos
+
+Verifica que:
+1. La variable `DATABASE_URL` esté correctamente configurada
+2. El firewall de PostgreSQL permita tu IP
+3. Las credenciales sean correctas
+
+### Error en build
+
+```bash
+# Limpia caché y reinstala
+rm -rf node_modules package-lock.json .next
+npm cache clean --force
+npm install
+```
+
+### Prisma Client no se genera
+
+```bash
+npx prisma generate
+```
+
+## 📚 Recursos
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Shadcn/ui](https://ui.shadcn.com/)
+- [ArchiMate](https://www.archimatetool.com/)
+
+## 📄 Licencia
+
+Uso interno de Terpel.
+
+---
+
+**Última actualización**: 2026-02-05
