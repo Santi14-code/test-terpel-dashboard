@@ -12,7 +12,8 @@
     "lint": "eslint",
     "postinstall": "prisma generate",
     "generate:archimate": "tsx scripts/archimate/generate-archimate.ts",
-    "generate:aviation": "tsx scripts/archimate/generate-aviation-view.ts"
+    "generate:aviation": "tsx scripts/archimate/generate-aviation-view.ts",
+    "generate:combustible-aviacion": "tsx scripts/archimate/generate-combustible-aviacion-view.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
