@@ -22,11 +22,5 @@
   },
   "networking": {
     "allowedIpRanges": []
-  },
-  "responseOverrides": {
-    "500": {
-      "rewrite": "/500.html",
-      "statusCode": 500
-    }
   }
 }
