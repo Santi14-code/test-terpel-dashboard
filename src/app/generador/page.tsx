@@ -237,11 +237,12 @@ export default function GeneradorPage() {
                 onClick={() => {
                   const img = document.getElementById('diagram-image') as HTMLImageElement
                   if (img) {
-                    const currentWidth = parseInt(img.style.width || '100%')
-                    img.style.width = Math.min(currentWidth + 20, 300) + '%'
+                    const currentWidth = parseFloat(img.style.width) || 100
+                    const newWidth = Math.min(currentWidth + 20, 300)
+                    img.style.width = newWidth + '%'
                   }
                 }}
-                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
               >
                 🔍 Zoom +
               </button>
@@ -249,11 +250,12 @@ export default function GeneradorPage() {
                 onClick={() => {
                   const img = document.getElementById('diagram-image') as HTMLImageElement
                   if (img) {
-                    const currentWidth = parseInt(img.style.width || '100%')
-                    img.style.width = Math.max(currentWidth - 20, 50) + '%'
+                    const currentWidth = parseFloat(img.style.width) || 100
+                    const newWidth = Math.max(currentWidth - 20, 50)
+                    img.style.width = newWidth + '%'
                   }
                 }}
-                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
               >
                 🔍 Zoom -
               </button>
@@ -264,7 +266,7 @@ export default function GeneradorPage() {
                     img.style.width = '100%'
                   }
                 }}
-                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
               >
                 ↺ Reset
               </button>
