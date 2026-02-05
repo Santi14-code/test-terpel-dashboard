@@ -45,6 +45,102 @@ function generateXmlFooter(): string {
   return `</archimate:model>`
 }
 
+// Generate visual diagram view with automatic layout
+function generateVisualView(
+  cap1: any[],
+  cap2: any[],
+  cap3: any[],
+  apps: any[]
+): string {
+  let xml = '  <folder name="Views" id="folder-views" type="diagrams">\n'
+  xml += '    <element xsi:type="archimate:ArchimateDiagramModel"\n'
+  xml += '        name="Vista Combustible-Aviación"\n'
+  xml += '        id="view-combustible-aviacion">\n'
+
+  let yPos = 50
+  const LEVEL_HEIGHT = 200
+  const ITEM_HEIGHT = 80
+  const ITEM_WIDTH = 200
+  const HORIZONTAL_SPACING = 50
+
+  // L1 Capabilities (Top level)
+  xml += '      <!-- Level 1 Capabilities -->\n'
+  let xPos = 50
+  cap1.forEach((c) => {
+    xml += `      <child xsi:type="archimate:DiagramObject"\n`
+    xml += `          id="view-${generateId('cap1', c.id_capacidad)}"\n`
+    xml += `          targetConnections=""\n`
+    xml += `          archimateElement="${generateId('cap1', c.id_capacidad)}">\n`
+    xml += `        <bounds x="${xPos}" y="${yPos}" width="${ITEM_WIDTH}" height="${ITEM_HEIGHT}"/>\n`
+    xml += `      </child>\n`
+    xPos += ITEM_WIDTH + HORIZONTAL_SPACING
+  })
+
+  // L2 Capabilities
+  yPos += LEVEL_HEIGHT
+  xml += '      <!-- Level 2 Capabilities -->\n'
+  xPos = 50
+  const cap2ByParent = new Map<number, any[]>()
+  cap2.forEach((c) => {
+    if (!cap2ByParent.has(c.id_capacidad)) {
+      cap2ByParent.set(c.id_capacidad, [])
+    }
+    cap2ByParent.get(c.id_capacidad)!.push(c)
+  })
+
+  cap2.forEach((c) => {
+    xml += `      <child xsi:type="archimate:DiagramObject"\n`
+    xml += `          id="view-${generateId('cap2', c.id_capacidad_nivel_2)}"\n`
+    xml += `          archimateElement="${generateId('cap2', c.id_capacidad_nivel_2)}">\n`
+    xml += `        <bounds x="${xPos}" y="${yPos}" width="${ITEM_WIDTH}" height="${ITEM_HEIGHT}"/>\n`
+    xml += `      </child>\n`
+    xPos += ITEM_WIDTH + HORIZONTAL_SPACING
+    if (xPos > 1200) {
+      xPos = 50
+      yPos += ITEM_HEIGHT + 30
+    }
+  })
+
+  // L3 Capabilities
+  yPos += LEVEL_HEIGHT
+  xml += '      <!-- Level 3 Capabilities -->\n'
+  xPos = 50
+  cap3.forEach((c) => {
+    xml += `      <child xsi:type="archimate:DiagramObject"\n`
+    xml += `          id="view-${generateId('cap3', c.id_capacidad_nivel_3)}"\n`
+    xml += `          archimateElement="${generateId('cap3', c.id_capacidad_nivel_3)}">\n`
+    xml += `        <bounds x="${xPos}" y="${yPos}" width="${ITEM_WIDTH}" height="${ITEM_HEIGHT}"/>\n`
+    xml += `      </child>\n`
+    xPos += ITEM_WIDTH + HORIZONTAL_SPACING
+    if (xPos > 1200) {
+      xPos = 50
+      yPos += ITEM_HEIGHT + 30
+    }
+  })
+
+  // Applications (Bottom level)
+  yPos += LEVEL_HEIGHT
+  xml += '      <!-- Applications -->\n'
+  xPos = 50
+  apps.forEach((app) => {
+    xml += `      <child xsi:type="archimate:DiagramObject"\n`
+    xml += `          id="view-${generateId('app', app.id_aplicacion)}"\n`
+    xml += `          archimateElement="${generateId('app', app.id_aplicacion)}">\n`
+    xml += `        <bounds x="${xPos}" y="${yPos}" width="${ITEM_WIDTH}" height="${ITEM_HEIGHT}"/>\n`
+    xml += `      </child>\n`
+    xPos += ITEM_WIDTH + HORIZONTAL_SPACING
+    if (xPos > 1200) {
+      xPos = 50
+      yPos += ITEM_HEIGHT + 30
+    }
+  })
+
+  xml += '    </element>\n'
+  xml += '  </folder>\n'
+
+  return xml
+}
+
 // Get capabilities related to Combustible-Aviación through subprocesses
 async function getCombustibleAviacionCapabilities() {
   console.log('🔍 Buscando capacidades relacionadas con Combustible-Aviación...')
@@ -318,7 +414,10 @@ async function generateCombustibleAviacionView() {
     xml +=
       '  <folder name="Implementation" id="folder-implementation" type="implementation_migration"></folder>\n'
     xml += '  <folder name="Other" id="folder-other" type="other"></folder>\n'
-    xml += '  <folder name="Views" id="folder-views" type="diagrams"></folder>\n'
+
+    // Generate visual view
+    console.log('🎨 Generando vista visual...')
+    xml += generateVisualView(cap1, cap2, cap3, apps)
 
     xml += generateXmlFooter()
 
