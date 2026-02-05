@@ -135,6 +135,7 @@ export async function GET(request: NextRequest) {
     // Generate PlantUML diagram
     let puml = '@startuml\n'
     puml += '!theme plain\n'
+    puml += 'top to bottom direction\n'
     puml += 'title Vista Arquitectónica\\nCapacidades y Aplicaciones\n\n'
     puml += 'skinparam packageStyle rectangle\n'
     puml += 'skinparam component {\n'
