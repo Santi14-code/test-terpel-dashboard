@@ -16,6 +16,27 @@ function cleanForPlantUML(text: string | null): string {
     .substring(0, 100) // Limit length
 }
 
+// Add line breaks to long text for PlantUML display
+function wrapTextForPlantUML(text: string, maxLength: number = 35): string {
+  if (text.length <= maxLength) return text
+
+  const words = text.split(' ')
+  const lines: string[] = []
+  let currentLine = ''
+
+  for (const word of words) {
+    if ((currentLine + ' ' + word).trim().length > maxLength) {
+      if (currentLine) lines.push(currentLine.trim())
+      currentLine = word
+    } else {
+      currentLine = currentLine ? currentLine + ' ' + word : word
+    }
+  }
+  if (currentLine) lines.push(currentLine.trim())
+
+  return lines.join('\\\\n')
+}
+
 // Generate PlantUML ID from text
 function generatePlantUMLId(prefix: string, id: number, name: string): string {
   const cleanName = cleanForPlantUML(name)
@@ -135,14 +156,16 @@ export async function GET(request: NextRequest) {
     // Generate PlantUML diagram
     let puml = '@startuml\n'
     puml += '!theme plain\n'
-    puml += 'top to bottom direction\n'
-    puml += 'scale 2400 width\n'
+    puml += 'left to right direction\n'
+    puml += 'scale 2800 height\n'
     puml += 'title Vista Arquitectónica\\nCapacidades y Aplicaciones\n\n'
     puml += 'skinparam packageStyle rectangle\n'
-    puml += 'skinparam nodesep 40\n'
-    puml += 'skinparam ranksep 120\n'
-    puml += 'skinparam defaultFontSize 14\n'
+    puml += 'skinparam nodesep 60\n'
+    puml += 'skinparam ranksep 180\n'
+    puml += 'skinparam defaultFontSize 11\n'
     puml += 'skinparam defaultFontName Arial\n'
+    puml += 'skinparam componentStyle rectangle\n'
+    puml += 'skinparam maxTextWidth 500\n'
     puml += 'skinparam component {\n'
     puml += '  BackgroundColor<<L1>> #FFE4B5\n'
     puml += '  BackgroundColor<<L2>> #FFD700\n'
@@ -150,8 +173,8 @@ export async function GET(request: NextRequest) {
     puml += '  BackgroundColor<<APP>> #87CEEB\n'
     puml += '  BorderColor Black\n'
     puml += '  ArrowColor Black\n'
-    puml += '  FontSize 14\n'
-    puml += '  Padding 10\n'
+    puml += '  FontSize 11\n'
+    puml += '  Padding 12\n'
     puml += '}\n\n'
 
     // Build hierarchy maps
@@ -175,7 +198,8 @@ export async function GET(request: NextRequest) {
     puml += "' Capacidades Nivel 1\n"
     cap1.forEach((c) => {
       const id = generatePlantUMLId('L1', c.id_capacidad, c.nombre)
-      puml += `[${c.nombre}] <<L1>> as ${id}\n`
+      const displayName = wrapTextForPlantUML(c.nombre, 20)
+      puml += `[${displayName}] <<L1>> as ${id}\n`
     })
     puml += '\n'
 
@@ -183,7 +207,8 @@ export async function GET(request: NextRequest) {
     puml += "' Capacidades Nivel 2\n"
     cap2.forEach((c) => {
       const id = generatePlantUMLId('L2', c.id_capacidad_nivel_2, c.nombre)
-      puml += `[${c.nombre}] <<L2>> as ${id}\n`
+      const displayName = wrapTextForPlantUML(c.nombre, 20)
+      puml += `[${displayName}] <<L2>> as ${id}\n`
     })
     puml += '\n'
 
@@ -191,7 +216,8 @@ export async function GET(request: NextRequest) {
     puml += "' Capacidades Nivel 3\n"
     cap3.forEach((c) => {
       const id = generatePlantUMLId('L3', c.id_capacidad_nivel_3, c.nombre)
-      puml += `[${c.nombre}] <<L3>> as ${id}\n`
+      const displayName = wrapTextForPlantUML(c.nombre, 20)
+      puml += `[${displayName}] <<L3>> as ${id}\n`
     })
     puml += '\n'
 
@@ -200,7 +226,8 @@ export async function GET(request: NextRequest) {
     apps.forEach((app) => {
       const id = generatePlantUMLId('APP', app.id_aplicacion, app.nombre)
       const criticidad = app.criticidad ? ` (${app.criticidad})` : ''
-      puml += `[${app.nombre}${criticidad}] <<APP>> as ${id}\n`
+      const displayName = wrapTextForPlantUML(app.nombre + criticidad, 20)
+      puml += `[${displayName}] <<APP>> as ${id}\n`
     })
     puml += '\n'
 

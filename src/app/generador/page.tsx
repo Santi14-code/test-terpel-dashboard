@@ -180,13 +180,22 @@ export default function GeneradorPage() {
           </button>
 
           {diagramUrl && (
-            <a
-              href={diagramUrl}
-              download
-              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
-            >
-              Descargar PNG
-            </a>
+            <>
+              <a
+                href={diagramUrl}
+                download
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+              >
+                Descargar PNG
+              </a>
+              <a
+                href={diagramUrl.replace('.png', '.puml')}
+                download
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+              >
+                Descargar PlantUML
+              </a>
+            </>
           )}
         </div>
       </div>
@@ -272,7 +281,7 @@ export default function GeneradorPage() {
               </button>
             </div>
           </div>
-          <div className="overflow-auto rounded-lg border bg-white" style={{ maxHeight: '800px' }}>
+          <div className="overflow-auto rounded-lg border bg-white" style={{ maxHeight: '1200px', width: '100%' }}>
             <img
               id="diagram-image"
               src={diagramUrl}
@@ -282,8 +291,23 @@ export default function GeneradorPage() {
                 console.error('Error loading image:', diagramUrl)
                 setError('Error cargando la imagen del diagrama. Intenta generar nuevamente.')
               }}
-              onLoad={() => {
+              onLoad={(e) => {
                 console.log('Diagram loaded successfully:', diagramUrl)
+                // Auto-fit diagram to container width on load
+                const img = e.target as HTMLImageElement
+                const container = img.parentElement
+                if (container && img.naturalWidth > 0) {
+                  const containerWidth = container.clientWidth
+                  const imageWidth = img.naturalWidth
+                  // If image is wider than container, scale it down to fit
+                  // Otherwise, show it at 100% (but not larger than container)
+                  if (imageWidth > containerWidth) {
+                    const fitPercentage = (containerWidth / imageWidth) * 100
+                    img.style.width = fitPercentage + '%'
+                  } else {
+                    img.style.width = '100%'
+                  }
+                }
               }}
             />
           </div>
