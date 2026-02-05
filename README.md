@@ -4,6 +4,31 @@ Dashboard de visualización de arquitectura empresarial para Terpel.
 
 ## 🚀 Quick Start
 
+### Prerequisitos
+
+- **Node.js** 20.19.0 o superior
+- **Java** (JRE o JDK) — requerido por PlantUML
+- **PlantUML** — requerido para la generación de diagramas blueprint
+
+Instalar PlantUML según tu sistema operativo:
+
+```bash
+# macOS
+brew install plantuml
+
+# Ubuntu / Debian
+sudo apt-get install plantuml
+
+# Windows (con Chocolatey)
+choco install plantuml
+```
+
+Verifica que esté instalado correctamente:
+
+```bash
+plantuml -version
+```
+
 ### Desarrollo Local
 
 ```bash
@@ -39,22 +64,14 @@ La aplicación estará disponible en: **http://localhost:3000**
 - Líneas de negocio
 - Líneas de negocio principal
 
-### 📐 Generación de Diagramas ArchiMate
+### Generador de Diagramas
 
-**NUEVO**: Genera diagramas ArchiMate profesionales automáticamente desde tu base de datos.
+Genera diagramas de arquitectura empresarial desde la base de datos usando PlantUML:
 
-```bash
-# Generar diagrama ArchiMate
-npm run generate:archimate
-```
+- **Vista de Capacidades**: Jerarquía de capacidades de negocio con aplicaciones asociadas
+- **Vista de Integraciones**: Blueprint Trivadis con interfaces y flujos entre aplicaciones
 
-El diagrama generado incluye:
-- ✅ Capacidades de negocio (3 niveles jerárquicos)
-- ✅ Aplicaciones del portafolio
-- ✅ Relaciones entre capacidades y aplicaciones
-- ✅ Compatible con Archi (herramienta de modelado ArchiMate)
-
-📖 **Documentación completa**: [scripts/archimate/README.md](./scripts/archimate/README.md)
+Accede desde la sección **Generador** en el menú lateral. Requiere PlantUML instalado (ver [Prerequisitos](#prerequisitos)).
 
 ## 🏗️ Arquitectura
 
@@ -93,8 +110,6 @@ terpel-nexus-t/
 │   │   └── utils.ts        # Utilidades generales
 │   ├── store/              # Zustand stores
 │   └── generated/          # Código generado (Prisma)
-├── scripts/                # Scripts de utilidad
-│   └── archimate/         # Generador de diagramas ArchiMate
 ├── prisma/                # Schema de Prisma
 ├── output/                # Archivos generados (git ignored)
 └── public/                # Assets estáticos
@@ -113,7 +128,6 @@ npm run build               # Build de producción
 npm start                   # Inicia servidor de producción
 
 # Utilidades
-npm run generate:archimate  # Genera diagramas ArchiMate
 npm run postinstall        # Genera Prisma Client (automático)
 ```
 
@@ -190,7 +204,6 @@ Este proyecto sigue **GitHub Flow**:
 
 ## 📝 Notas
 
-- **Node.js**: Requiere versión 20.19.0 o superior
 - **Base de datos**: Solo lectura (no modifica datos)
 - **Timezone**: Configurado para zona horaria de Colombia
 
@@ -218,13 +231,21 @@ npm install
 npx prisma generate
 ```
 
+### El diagrama blueprint no se genera / no aparecen botones de descarga
+
+Esto ocurre cuando PlantUML no está instalado en el sistema. Verifica:
+
+1. Que PlantUML esté instalado: `plantuml -version`
+2. Que Java esté instalado: `java -version`
+3. Si no están instalados, sigue las instrucciones en [Prerequisitos](#prerequisitos)
+
 ## 📚 Recursos
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [Shadcn/ui](https://ui.shadcn.com/)
-- [ArchiMate](https://www.archimatetool.com/)
+- [PlantUML](https://plantuml.com/)
 
 ## 📄 Licencia
 
