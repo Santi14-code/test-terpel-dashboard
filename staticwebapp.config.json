@@ -1,7 +1,15 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif,ico}", "/css/*"]
+    "exclude": [
+      "/_next/*",
+      "/api/*",
+      "/favicon.ico",
+      "/*.svg",
+      "/*.png",
+      "/*.jpg",
+      "/*.gif"
+    ]
   },
   "routes": [
     {
@@ -14,5 +22,11 @@
   },
   "networking": {
     "allowedIpRanges": []
+  },
+  "responseOverrides": {
+    "500": {
+      "rewrite": "/500.html",
+      "statusCode": 500
+    }
   }
 }
