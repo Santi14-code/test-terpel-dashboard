@@ -208,16 +208,60 @@ export default function GeneradorPage() {
       {/* Diagram Viewer */}
       {diagramUrl && (
         <div className="rounded-lg border bg-card p-6">
-          <h2 className="mb-4 text-xl font-semibold">Diagrama Generado</h2>
-          <div className="overflow-hidden rounded-lg border bg-white">
-            <div className="overflow-auto">
-              <img
-                src={diagramUrl}
-                alt="Diagrama generado"
-                className="w-full"
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-semibold">Diagrama Generado</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  const img = document.getElementById('diagram-image') as HTMLImageElement
+                  if (img) {
+                    const currentWidth = parseInt(img.style.width || '100%')
+                    img.style.width = Math.min(currentWidth + 20, 300) + '%'
+                  }
+                }}
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+              >
+                🔍 Zoom +
+              </button>
+              <button
+                onClick={() => {
+                  const img = document.getElementById('diagram-image') as HTMLImageElement
+                  if (img) {
+                    const currentWidth = parseInt(img.style.width || '100%')
+                    img.style.width = Math.max(currentWidth - 20, 50) + '%'
+                  }
+                }}
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+              >
+                🔍 Zoom -
+              </button>
+              <button
+                onClick={() => {
+                  const img = document.getElementById('diagram-image') as HTMLImageElement
+                  if (img) {
+                    img.style.width = '100%'
+                  }
+                }}
+                className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1 text-sm font-medium hover:bg-accent"
+              >
+                ↺ Reset
+              </button>
             </div>
+          </div>
+          <div className="overflow-auto rounded-lg border bg-white" style={{ maxHeight: '800px' }}>
+            <img
+              id="diagram-image"
+              src={diagramUrl}
+              alt="Diagrama generado"
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+              onError={(e) => {
+                console.error('Error loading image:', diagramUrl)
+                setError('Error cargando la imagen del diagrama. Intenta generar nuevamente.')
+              }}
+              onLoad={() => {
+                console.log('Diagram loaded successfully:', diagramUrl)
+              }}
+            />
           </div>
         </div>
       )}
