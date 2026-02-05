@@ -45,7 +45,7 @@ function generateXmlFooter(): string {
   return `</archimate:model>`
 }
 
-// Generate visual diagram view with automatic layout
+// Generate visual diagram view with automatic layout and relationships
 function generateVisualView(
   cap1: any[],
   cap2: any[],
@@ -63,13 +63,29 @@ function generateVisualView(
   const ITEM_WIDTH = 200
   const HORIZONTAL_SPACING = 50
 
+  // Build relationship maps for hierarchy connections
+  const cap2ByParent = new Map<number, any[]>()
+  cap2.forEach((c) => {
+    if (!cap2ByParent.has(c.id_capacidad)) {
+      cap2ByParent.set(c.id_capacidad, [])
+    }
+    cap2ByParent.get(c.id_capacidad)!.push(c)
+  })
+
+  const cap3ByParent = new Map<number, any[]>()
+  cap3.forEach((c) => {
+    if (!cap3ByParent.has(c.id_capacidad_nivel_2)) {
+      cap3ByParent.set(c.id_capacidad_nivel_2, [])
+    }
+    cap3ByParent.get(c.id_capacidad_nivel_2)!.push(c)
+  })
+
   // L1 Capabilities (Top level)
   xml += '      <!-- Level 1 Capabilities -->\n'
   let xPos = 50
   cap1.forEach((c) => {
     xml += `      <child xsi:type="archimate:DiagramObject"\n`
     xml += `          id="view-${generateId('cap1', c.id_capacidad)}"\n`
-    xml += `          targetConnections=""\n`
     xml += `          archimateElement="${generateId('cap1', c.id_capacidad)}">\n`
     xml += `        <bounds x="${xPos}" y="${yPos}" width="${ITEM_WIDTH}" height="${ITEM_HEIGHT}"/>\n`
     xml += `      </child>\n`
@@ -80,14 +96,6 @@ function generateVisualView(
   yPos += LEVEL_HEIGHT
   xml += '      <!-- Level 2 Capabilities -->\n'
   xPos = 50
-  const cap2ByParent = new Map<number, any[]>()
-  cap2.forEach((c) => {
-    if (!cap2ByParent.has(c.id_capacidad)) {
-      cap2ByParent.set(c.id_capacidad, [])
-    }
-    cap2ByParent.get(c.id_capacidad)!.push(c)
-  })
-
   cap2.forEach((c) => {
     xml += `      <child xsi:type="archimate:DiagramObject"\n`
     xml += `          id="view-${generateId('cap2', c.id_capacidad_nivel_2)}"\n`
@@ -133,6 +141,34 @@ function generateVisualView(
       xPos = 50
       yPos += ITEM_HEIGHT + 30
     }
+  })
+
+  // Add visual connections (hierarchy: L1 -> L2 -> L3)
+  xml += '\n      <!-- Visual Connections for Hierarchy -->\n'
+  let connectionId = 0
+
+  // L1 -> L2 connections
+  cap1.forEach((c1) => {
+    const children = cap2ByParent.get(c1.id_capacidad) || []
+    children.forEach((c2) => {
+      xml += `      <child xsi:type="archimate:Connection"\n`
+      xml += `          id="view-conn-${connectionId++}"\n`
+      xml += `          source="view-${generateId('cap1', c1.id_capacidad)}"\n`
+      xml += `          target="view-${generateId('cap2', c2.id_capacidad_nivel_2)}"\n`
+      xml += `          archimateRelationship="rel-comp-l1-l2-${c1.id_capacidad}-${c2.id_capacidad_nivel_2}"/>\n`
+    })
+  })
+
+  // L2 -> L3 connections
+  cap2.forEach((c2) => {
+    const children = cap3ByParent.get(c2.id_capacidad_nivel_2) || []
+    children.forEach((c3) => {
+      xml += `      <child xsi:type="archimate:Connection"\n`
+      xml += `          id="view-conn-${connectionId++}"\n`
+      xml += `          source="view-${generateId('cap2', c2.id_capacidad_nivel_2)}"\n`
+      xml += `          target="view-${generateId('cap3', c3.id_capacidad_nivel_3)}"\n`
+      xml += `          archimateRelationship="rel-comp-l2-l3-${c2.id_capacidad_nivel_2}-${c3.id_capacidad_nivel_3}"/>\n`
+    })
   })
 
   xml += '    </element>\n'
@@ -385,14 +421,14 @@ async function generateCombustibleAviacionView() {
       const children = cap2ByParent.get(c1.id_capacidad) || []
       children.forEach((c2) => {
         xml += `    <relationship xsi:type="archimate:CompositionRelationship"
-        id="rel-comp-${compCount++}"
+        id="rel-comp-l1-l2-${c1.id_capacidad}-${c2.id_capacidad_nivel_2}"
         source="${generateId('cap1', c1.id_capacidad)}"
         target="${generateId('cap2', c2.id_capacidad_nivel_2)}" />\n`
 
         const grandchildren = cap3ByParent.get(c2.id_capacidad_nivel_2) || []
         grandchildren.forEach((c3) => {
           xml += `    <relationship xsi:type="archimate:CompositionRelationship"
-        id="rel-comp-${compCount++}"
+        id="rel-comp-l2-l3-${c2.id_capacidad_nivel_2}-${c3.id_capacidad_nivel_3}"
         source="${generateId('cap2', c2.id_capacidad_nivel_2)}"
         target="${generateId('cap3', c3.id_capacidad_nivel_3)}" />\n`
         })
