@@ -31,7 +31,6 @@ jobs:
           app_location: "/"
           api_location: ""
           output_location: ""
-          skip_api_build: true
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
