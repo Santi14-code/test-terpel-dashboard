@@ -3,8 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useFilterStore } from '@/store/filterStore'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
-
 export function useFilteredQuery(endpoint: string) {
   const { criticidad, estados, lineasNegocioPrincipal, lineasNegocio } = useFilterStore()
 
@@ -15,9 +13,7 @@ export function useFilteredQuery(endpoint: string) {
   if (lineasNegocio.length) params.set('lineasNegocio', lineasNegocio.join(','))
 
   const qs = params.toString()
-  // Remove leading /api from endpoint and prepend API_URL
-  const cleanEndpoint = endpoint.replace(/^\/api/, '')
-  const url = qs ? `${API_URL}${cleanEndpoint}?${qs}` : `${API_URL}${cleanEndpoint}`
+  const url = qs ? `${endpoint}?${qs}` : endpoint
 
   return useQuery({
     queryKey: [endpoint, qs],
