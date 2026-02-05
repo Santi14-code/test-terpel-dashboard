@@ -30,19 +30,41 @@ export default function GeneradorPage() {
       .catch((err) => console.error('Error loading filters:', err))
   }, [])
 
-  // Load tipos de linea when linea principal changes
+  // Load tipos de linea and capacidades L1 when linea principal changes
   useEffect(() => {
     if (filters.lineaPrincipal) {
       fetch(`/api/diagrams/filters?lineaPrincipal=${filters.lineaPrincipal}`)
         .then((res) => res.json())
         .then((data) => {
           setTiposLinea(data.tiposLinea || [])
+          setCapacidadesL1(data.capacidadesL1 || [])
         })
-        .catch((err) => console.error('Error loading tipos linea:', err))
+        .catch((err) => console.error('Error loading filters:', err))
     } else {
       setTiposLinea([])
+      setCapacidadesL1([])
     }
   }, [filters.lineaPrincipal])
+
+  // Load capacidades L1 when tipo linea changes
+  useEffect(() => {
+    if (filters.tipoLinea) {
+      fetch(`/api/diagrams/filters?lineaPrincipal=${filters.lineaPrincipal}&tipoLinea=${filters.tipoLinea}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCapacidadesL1(data.capacidadesL1 || [])
+        })
+        .catch((err) => console.error('Error loading capacidades L1:', err))
+    } else if (filters.lineaPrincipal) {
+      // Reset to linea principal capacidades if tipo linea is cleared
+      fetch(`/api/diagrams/filters?lineaPrincipal=${filters.lineaPrincipal}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCapacidadesL1(data.capacidadesL1 || [])
+        })
+        .catch((err) => console.error('Error loading capacidades L1:', err))
+    }
+  }, [filters.tipoLinea])
 
   const handleGenerate = async () => {
     setLoading(true)
@@ -92,7 +114,7 @@ export default function GeneradorPage() {
             <select
               value={filters.lineaPrincipal}
               onChange={(e) => {
-                setFilters({ ...filters, lineaPrincipal: e.target.value, tipoLinea: '' })
+                setFilters({ ...filters, lineaPrincipal: e.target.value, tipoLinea: '', capacidadL1: '' })
                 setDiagramUrl(null)
               }}
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -112,7 +134,7 @@ export default function GeneradorPage() {
             <select
               value={filters.tipoLinea}
               onChange={(e) => {
-                setFilters({ ...filters, tipoLinea: e.target.value })
+                setFilters({ ...filters, tipoLinea: e.target.value, capacidadL1: '' })
                 setDiagramUrl(null)
               }}
               disabled={!filters.lineaPrincipal}
