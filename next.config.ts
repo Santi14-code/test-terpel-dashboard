@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Standalone mode deshabilitado para Azure Static Web Apps
+  // output: "standalone",
 };
 
 export default nextConfig;
