@@ -144,6 +144,8 @@ function generateVisualView(
   })
 
   // Add visual connections (hierarchy: L1 -> L2 -> L3)
+  // Note: Using sourceConnections/targetConnections approach instead of archimateRelationship
+  // for better compatibility with Archi strict validation
   xml += '\n      <!-- Visual Connections for Hierarchy -->\n'
   let connectionId = 0
 
@@ -154,8 +156,7 @@ function generateVisualView(
       xml += `      <child xsi:type="archimate:Connection"\n`
       xml += `          id="view-conn-${connectionId++}"\n`
       xml += `          source="view-${generateId('cap1', c1.id_capacidad)}"\n`
-      xml += `          target="view-${generateId('cap2', c2.id_capacidad_nivel_2)}"\n`
-      xml += `          archimateRelationship="rel-comp-l1-l2-${c1.id_capacidad}-${c2.id_capacidad_nivel_2}"/>\n`
+      xml += `          target="view-${generateId('cap2', c2.id_capacidad_nivel_2)}"/>\n`
     })
   })
 
@@ -166,8 +167,7 @@ function generateVisualView(
       xml += `      <child xsi:type="archimate:Connection"\n`
       xml += `          id="view-conn-${connectionId++}"\n`
       xml += `          source="view-${generateId('cap2', c2.id_capacidad_nivel_2)}"\n`
-      xml += `          target="view-${generateId('cap3', c3.id_capacidad_nivel_3)}"\n`
-      xml += `          archimateRelationship="rel-comp-l2-l3-${c2.id_capacidad_nivel_2}-${c3.id_capacidad_nivel_3}"/>\n`
+      xml += `          target="view-${generateId('cap3', c3.id_capacidad_nivel_3)}"/>\n`
     })
   })
 
