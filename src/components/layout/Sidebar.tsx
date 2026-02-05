@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import {
   LayoutDashboard, Shield, AlertTriangle, Network, Target,
   ShieldAlert, DollarSign, Lightbulb, Activity, RefreshCw,
-  Briefcase, ChevronLeft, ChevronRight,
+  Briefcase, ChevronLeft, ChevronRight, GitBranch,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -22,6 +22,7 @@ const navItems = [
   { name: 'Innovacion', href: '/innovation', icon: Lightbulb },
   { name: 'Performance', href: '/performance', icon: Activity },
   { name: 'Cambios', href: '/change', icon: RefreshCw },
+  { name: 'Generador', href: '/generador', icon: GitBranch },
 ]
 
 export function Sidebar() {
