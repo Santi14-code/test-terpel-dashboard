@@ -43,21 +43,30 @@ La aplicación estará disponible en: **http://localhost:3000**
 
 ## 📊 Funcionalidades
 
-### Dashboard Interactivo
+### Dashboards Estratégicos
 
-- **Dashboard Principal**: KPIs, criticidad de aplicaciones, tecnologías más usadas
-- **Portafolio de Aplicaciones**: Inventario completo con tabla ordenable y buscable, distribución por criticidad, modelo de servicio y estado, top 10 por complejidad e integración, métricas de salud del portafolio
-- **Alineación**: Alineación de aplicaciones con capacidades de negocio
-- **Arquitectura**: Vista de componentes y sus relaciones
-- **Gestión del Cambio**: Tracking de cambios y transformaciones
-- **Costos**: Análisis de costos por aplicación y tecnología
-- **Ejecutivo**: Vista resumida para liderazgo
-- **Gobierno**: Métricas de cumplimiento y gobernanza
-- **Innovación**: Tracking de iniciativas de innovación
-- **Performance**: Métricas de rendimiento de aplicaciones
-- **Riesgos**: Análisis de riesgos tecnológicos
-- **Deuda Técnica**: Identificación y tracking de deuda técnica
-- **Análisis de Impacto**: Evaluación dinámica del impacto de reemplazar cualquier aplicación, con score de impacto, complejidad de integraciones, procesos afectados, estimación de esfuerzo y evaluación de riesgos
+Dirigidos a CEO, CFO, CTO, VP y Board Members para toma de decisiones ejecutivas.
+
+- **Executive Summary** (`/`): Vista panorámica de la arquitectura empresarial con 6 KPIs, gráfico de dona por criticidad y heatmap de macroprocesos vs tecnologías
+- **Strategic Risk Matrix** (`/strategic-risk-matrix`): Scatter plot de criticidad vs complejidad arquitectónica con cuadrantes de priorización, top 10 apps en zona roja con acciones sugeridas
+- **Cloud Transformation Tracker** (`/cloud-transformation`): Progreso de adopción cloud vs meta, distribución por modelo de servicio y plataforma, candidatos a migración
+- **Vendor Concentration** (`/vendor-concentration`): Treemap de concentración por proveedor, indicadores de riesgo de dependencia, top 10 vendors con desglose por criticidad
+
+### Dashboards Tácticos
+
+Dirigidos a Directores, Gerentes y Arquitectos Senior para planificación y coordinación.
+
+- **Application Portfolio Matrix** (`/portfolio-matrix`): Matriz Gartner con cuadrantes Invertir/Modernizar/Tolerar/Eliminar, scoring automático de valor de negocio y capacidad técnica
+- **Technology Radar** (`/tech-radar`): Clasificación de tecnologías por nivel de adopción (Adopt/Trial/Assess/Hold), visualización radar SVG con tablas por anillo
+- **Capability Fragmentation Report** (`/capability-fragmentation`): Identificación de capacidades servidas por múltiples aplicaciones, oportunidades de consolidación
+
+### Dashboards Operativos
+
+Dirigidos a Arquitectos de Solución, Tech Leads y DevOps para trabajo diario.
+
+- **Application Deep Dive** (`/app-deep-dive`): Vista 360° de una aplicación individual con componentes, interfaces, despliegues, procesos soportados y compliance de datos personales
+- **Technology Stack Analyzer** (`/tech-stack-analyzer`): Análisis detallado por tecnología con heatmap tech×app, alertas de tecnologías huérfanas y multi-versión, filtro por categoría
+- **Data Privacy & Compliance** (`/data-privacy`): Tracking de componentes con datos personales, indicadores de riesgo, distribución por modelo de servicio y criticidad
 
 ### Filtros Avanzados
 
@@ -99,11 +108,17 @@ terpel-nexus-t/
 │   │   │   ├── dashboard/    # Dashboard endpoints
 │   │   │   ├── diagrams/     # Generación de diagramas
 │   │   │   └── filters/      # Filtros endpoint
-│   │   ├── alignment/        # Página de alineación
-│   │   ├── architecture/     # Página de arquitectura
-│   │   ├── impact-analysis/  # Análisis de impacto
-│   │   ├── generador/        # Generador de diagramas
-│   │   └── ...               # Otras páginas
+│   │   ├── strategic-risk-matrix/     # S2. Matriz de riesgo estratégico
+│   │   ├── cloud-transformation/     # S3. Transformación cloud
+│   │   ├── vendor-concentration/     # S4. Concentración de vendors
+│   │   ├── portfolio-matrix/         # T2. Matriz de portafolio
+│   │   ├── tech-radar/               # T3. Radar tecnológico
+│   │   ├── capability-fragmentation/ # T6. Fragmentación de capacidades
+│   │   ├── app-deep-dive/            # O1. Deep dive de aplicación
+│   │   ├── tech-stack-analyzer/      # O2. Analizador de stack
+│   │   ├── data-privacy/             # O4. Privacidad y compliance
+│   │   ├── generador/                # Generador de diagramas
+│   │   └── ...                       # Dashboards legacy
 │   ├── components/           # Componentes React
 │   │   ├── charts/          # Componentes de gráficos
 │   │   ├── layout/          # Layout components
@@ -168,11 +183,15 @@ El proyecto usa Prisma con:
 
 El dashboard incluye diversos tipos de gráficos:
 
-- **Pie Charts**: Distribución de criticidad
-- **Bar Charts**: Top aplicaciones, tecnologías
-- **Treemaps**: Jerarquía de procesos
+- **Pie/Donut Charts**: Distribución de criticidad, modelos de servicio, compliance
+- **Scatter Plots**: Matrices de riesgo, portafolio Gartner con cuadrantes
+- **Bar Charts**: Top aplicaciones, tecnologías, vendors, fragmentación
+- **Stacked Bar Charts**: Cobertura de macroprocesos, plataformas por criticidad
+- **Heatmaps**: Macroprocesos × tecnologías, tecnologías × aplicaciones
+- **Treemaps**: Jerarquía de procesos, concentración de vendors
 - **Sunburst Charts**: Jerarquía de capacidades
-- **Stacked Bar Charts**: Cobertura de macroprocesos
+- **Radar SVG**: Technology radar con anillos de adopción
+- **Progress Bars**: Metas de transformación cloud
 
 ## 🎨 UI/UX
 
@@ -256,4 +275,4 @@ Uso interno de Terpel.
 
 ---
 
-**Última actualización**: 2026-02-09
+**Última actualización**: 2026-02-10
