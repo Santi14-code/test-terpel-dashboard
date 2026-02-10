@@ -32,17 +32,17 @@ export default function AppDeepDivePage() {
 
   return (
     <div className="flex-1">
-      <Header title="Application Deep Dive" subtitle="Vista 360 de una aplicacion con toda su informacion tecnica" />
+      <Header title="Application Deep Dive" subtitle="Vista 360° de una aplicación con toda su información técnica" />
       <div className="p-6 space-y-6">
         {/* App Selector */}
         <div className="bg-card rounded-lg border border-border p-4">
-          <label className="text-sm font-medium text-muted-foreground block mb-2">Seleccionar Aplicacion</label>
+          <label className="text-sm font-medium text-muted-foreground block mb-2">Seleccionar Aplicación</label>
           <select
             value={selectedAppId ?? ''}
             onChange={(e) => setSelectedAppId(e.target.value ? Number(e.target.value) : null)}
             className="w-full max-w-md text-sm bg-background border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/20"
           >
-            <option value="">-- Seleccione una aplicacion --</option>
+            <option value="">-- Seleccione una aplicación --</option>
             {apps.map((app: any) => (
               <option key={app.id_aplicacion} value={app.id_aplicacion}>
                 {app.nombre} ({app.criticidad || 'Sin criticidad'})
@@ -53,7 +53,7 @@ export default function AppDeepDivePage() {
 
         {!selectedAppId && (
           <div className="text-center text-muted-foreground py-20">
-            Seleccione una aplicacion para ver su informacion detallada
+            Seleccione una aplicación para ver su información detallada
           </div>
         )}
 
@@ -93,22 +93,22 @@ export default function AppDeepDivePage() {
               <KPICard label="Interfaces" value={detail.summary.interfaces} icon={Plug} />
               <KPICard label="Despliegues" value={detail.summary.deployments} icon={Server} />
               <KPICard label="Procesos" value={detail.summary.processes} icon={Layers} />
-              <KPICard label="Tecnologias" value={detail.summary.technologies} icon={Cpu} />
+              <KPICard label="Tecnologías" value={detail.summary.technologies} icon={Cpu} />
               <KPICard label="Datos Personales" value={detail.summary.hasPersonalData ? 'Si' : 'No'} icon={Shield}
                 color={detail.summary.hasPersonalData ? 'text-warning' : 'text-success'} />
             </div>
 
             {/* Components table */}
             <div className="bg-card rounded-lg border border-border p-4">
-              <h3 className="font-semibold mb-3">Componentes Logicos</h3>
+              <h3 className="font-semibold mb-3">Componentes Lógicos</h3>
               <div className="overflow-auto max-h-64">
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b border-border">
                       <th className="text-left p-2">Nombre</th>
                       <th className="text-left p-2">Tipo</th>
-                      <th className="text-left p-2">Tecnologia</th>
-                      <th className="text-left p-2">Categoria</th>
+                      <th className="text-left p-2">Tecnología</th>
+                      <th className="text-left p-2">Categoría</th>
                       <th className="text-left p-2">Version</th>
                       <th className="text-center p-2">Datos Pers.</th>
                       <th className="text-center p-2">Documentado</th>
@@ -142,7 +142,7 @@ export default function AppDeepDivePage() {
                         <th className="text-left p-2">Nombre</th>
                         <th className="text-left p-2">Tipo</th>
                         <th className="text-left p-2">Estado</th>
-                        <th className="text-left p-2">Descripcion</th>
+                        <th className="text-left p-2">Descripción</th>
                       </tr>
                     </thead>
                     <tbody>

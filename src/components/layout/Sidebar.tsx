@@ -31,7 +31,7 @@ interface NavGroup {
 const navGroups: NavGroup[] = [
   {
     id: 'estrategico',
-    name: 'Estrategico',
+    name: 'Estratégico',
     defaultExpanded: true,
     items: [
       { name: 'Executive Summary', href: '/', icon: BarChart3 },
@@ -44,7 +44,7 @@ const navGroups: NavGroup[] = [
   },
   {
     id: 'tactico',
-    name: 'Tactico',
+    name: 'Táctico',
     defaultExpanded: false,
     items: [
       { name: 'Integration Complexity', href: '/coming-soon/integration-complexity-map', icon: Share2 },
@@ -68,11 +68,12 @@ const navGroups: NavGroup[] = [
       { name: 'Process Traceability', href: '/coming-soon/process-to-technology-traceability', icon: Link2 },
       { name: 'Component Lifecycle', href: '/coming-soon/component-lifecycle-dashboard', icon: Clock },
       { name: 'Skills Gap Analysis', href: '/coming-soon/skills-expertise-gap-analysis', icon: GraduationCap },
+      { name: 'Diagram Generator', href: '/generador', icon: GitBranch },
     ],
   },
   {
-    id: 'old',
-    name: 'Old',
+    id: 'legacy',
+    name: 'Legacy',
     defaultExpanded: false,
     items: [
       { name: 'Ejecutivo', href: '/executive', icon: Briefcase },
@@ -80,15 +81,14 @@ const navGroups: NavGroup[] = [
       { name: 'Portafolio', href: '/portfolio', icon: FolderKanban },
       { name: 'Matriz Apps×Tech', href: '/matrix', icon: Table },
       { name: 'Impacto', href: '/impact-analysis', icon: Crosshair },
-      { name: 'Deuda Tecnica', href: '/technical-debt', icon: AlertTriangle },
+      { name: 'Deuda Técnica', href: '/technical-debt', icon: AlertTriangle },
       { name: 'Arquitectura', href: '/architecture', icon: Network },
-      { name: 'Alineacion', href: '/alignment', icon: Target },
+      { name: 'Alineación', href: '/alignment', icon: Target },
       { name: 'Riesgos', href: '/risks', icon: ShieldAlert },
       { name: 'Costos', href: '/costs', icon: DollarSign },
-      { name: 'Innovacion', href: '/innovation', icon: Lightbulb },
+      { name: 'Innovación', href: '/innovation', icon: Lightbulb },
       { name: 'Performance', href: '/performance', icon: Activity },
       { name: 'Cambios', href: '/change', icon: RefreshCw },
-      { name: 'Generador', href: '/generador', icon: GitBranch },
     ],
   },
 ]
@@ -145,7 +145,7 @@ export function Sidebar() {
               {!collapsed && (
                 <button
                   onClick={() => toggleGroup(group.id)}
-                  className="flex items-center w-full px-4 py-2 mt-2 text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50 hover:text-sidebar-foreground/80 transition-colors"
+                  className="flex items-center w-full px-4 py-2 mt-2 text-xs font-semibold tracking-wider text-sidebar-foreground/50 hover:text-sidebar-foreground/80 transition-colors"
                 >
                   <ChevronDown
                     size={14}

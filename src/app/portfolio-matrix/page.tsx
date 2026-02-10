@@ -26,7 +26,7 @@ export default function PortfolioMatrixPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Application Portfolio Matrix" subtitle="Clasificacion de aplicaciones para decisiones de inversion (modelo Gartner)" />
+        <Header title="Application Portfolio Matrix" subtitle="Clasificación de aplicaciones para decisiones de inversión (modelo Gartner)" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -48,7 +48,7 @@ export default function PortfolioMatrixPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Application Portfolio Matrix" subtitle="Clasificacion de aplicaciones para decisiones de inversion (modelo Gartner)" />
+      <Header title="Application Portfolio Matrix" subtitle="Clasificación de aplicaciones para decisiones de inversión (modelo Gartner)" />
       <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {kpiCards.map((kpi) => (
@@ -59,7 +59,7 @@ export default function PortfolioMatrixPage() {
         {/* Scatter Plot */}
         <ChartContainer
           title="Matriz de Portafolio"
-          subtitle="Eje X: Capacidad tecnica (moderno vs legacy) | Eje Y: Valor de negocio"
+          subtitle="Eje X: Capacidad técnica (moderno vs legacy) | Eje Y: Valor de negocio"
           height="h-[500px]"
         >
           <ResponsiveContainer width="100%" height="100%">
@@ -67,7 +67,7 @@ export default function PortfolioMatrixPage() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="techScore" type="number" domain={[0, 20]}
-                label={{ value: 'Capacidad Tecnica (mayor = mas moderno)', position: 'bottom', offset: 0, style: { fontSize: 11, fill: '#888' } }}
+                label={{ value: 'Capacidad Técnica (mayor = más moderno)', position: 'bottom', offset: 0, style: { fontSize: 11, fill: '#888' } }}
               />
               <YAxis
                 dataKey="businessValue" type="number" domain={[0, 20]}
@@ -85,7 +85,7 @@ export default function PortfolioMatrixPage() {
                       <p className="font-semibold text-sm mb-1">{d.name}</p>
                       <p>Criticidad: <span className="font-medium">{d.criticidad}</span></p>
                       <p>Valor de negocio: <span className="font-medium">{d.businessValue}</span></p>
-                      <p>Capacidad tecnica: <span className="font-medium">{d.techScore}</span></p>
+                      <p>Capacidad técnica:<span className="font-medium">{d.techScore}</span></p>
                       <p>Modelo: <span className="font-medium">{d.model}</span></p>
                       <p>Componentes: <span className="font-medium">{d.components}</span></p>
                     </div>
@@ -125,13 +125,13 @@ export default function PortfolioMatrixPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {data?.migrationCandidates?.length > 0 && (
             <div className="bg-card rounded-lg border border-orange-500/30 p-4">
-              <h3 className="font-semibold mb-1">Candidatos a Modernizacion</h3>
-              <p className="text-xs text-muted-foreground mb-3">Alto valor de negocio pero stack tecnologico legacy</p>
+              <h3 className="font-semibold mb-1">Candidatos a Modernización</h3>
+              <p className="text-xs text-muted-foreground mb-3">Alto valor de negocio pero stack tecnológico legacy</p>
               <div className="overflow-auto max-h-48">
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b border-border">
-                      <th className="text-left p-2">Aplicacion</th>
+                      <th className="text-left p-2">Aplicación</th>
                       <th className="text-left p-2">Criticidad</th>
                       <th className="text-left p-2">Modelo</th>
                       <th className="text-right p-2">Valor</th>
@@ -160,12 +160,12 @@ export default function PortfolioMatrixPage() {
           {data?.quickWins?.length > 0 && (
             <div className="bg-card rounded-lg border border-red-500/30 p-4">
               <h3 className="font-semibold mb-1">Quick Wins — Candidatos a Eliminar</h3>
-              <p className="text-xs text-muted-foreground mb-3">Bajo valor y stack legacy — ahorros rapidos por deprecacion</p>
+              <p className="text-xs text-muted-foreground mb-3">Bajo valor y stack legacy — ahorros rápidos por deprecación</p>
               <div className="overflow-auto max-h-48">
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b border-border">
-                      <th className="text-left p-2">Aplicacion</th>
+                      <th className="text-left p-2">Aplicación</th>
                       <th className="text-left p-2">Criticidad</th>
                       <th className="text-left p-2">Modelo</th>
                       <th className="text-right p-2">Valor</th>

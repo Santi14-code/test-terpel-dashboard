@@ -26,7 +26,7 @@ export default function CloudTransformationPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Cloud Transformation Tracker" subtitle="Progreso de la estrategia cloud-first y distribucion por plataforma" />
+        <Header title="Cloud Transformation Tracker" subtitle="Progreso de la estrategia cloud-first y distribución por plataforma" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -42,7 +42,7 @@ export default function CloudTransformationPage() {
   const kpiCards = [
     { label: 'Apps Cloud', value: kpis?.cloudApps ?? 0, icon: Cloud, color: 'text-success' },
     { label: 'Apps On-Premise', value: kpis?.onPremApps ?? 0, icon: Server },
-    { label: 'Adopcion Cloud', value: formatPercent(kpis?.cloudPercent ?? 0, 0), icon: TrendingUp },
+    { label: 'Adopción Cloud', value: formatPercent(kpis?.cloudPercent ?? 0, 0), icon: TrendingUp },
     { label: 'Gap vs Meta', value: `${kpis?.gap ?? 0}pp`, icon: Target, color: kpis?.gap > 0 ? 'text-warning' : 'text-success' },
   ]
 
@@ -51,7 +51,7 @@ export default function CloudTransformationPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Cloud Transformation Tracker" subtitle="Progreso de la estrategia cloud-first y distribucion por plataforma" />
+      <Header title="Cloud Transformation Tracker" subtitle="Progreso de la estrategia cloud-first y distribución por plataforma" />
       <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {kpiCards.map((kpi) => (
@@ -88,7 +88,7 @@ export default function CloudTransformationPage() {
 
         {/* Row 2: Donut + Stacked bar */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <ChartContainer title="Distribucion por Modelo de Servicio" subtitle="Cloud (SaaS/PaaS/IaaS) vs On-Premise">
+          <ChartContainer title="Distribución por Modelo de Servicio" subtitle="Cloud (SaaS/PaaS/IaaS) vs On-Premise">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.modelDistribution} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" nameKey="name"
@@ -102,7 +102,7 @@ export default function CloudTransformationPage() {
             </ResponsiveContainer>
           </ChartContainer>
 
-          <ChartContainer title="Distribucion por Plataforma" subtitle="Segmentado por criticidad de aplicaciones" height="h-96">
+          <ChartContainer title="Distribución por Plataforma" subtitle="Segmentado por criticidad de aplicaciones" height="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data?.platformDistribution} margin={{ bottom: 60 }}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -122,13 +122,13 @@ export default function CloudTransformationPage() {
         {/* On-prem critical apps */}
         {data?.onPremCritical?.length > 0 && (
           <div className="bg-card rounded-lg border border-border p-4">
-            <h3 className="font-semibold mb-1">Aplicaciones On-Premise Criticas</h3>
-            <p className="text-xs text-muted-foreground mb-4">Candidatas prioritarias para migracion cloud</p>
+            <h3 className="font-semibold mb-1">Aplicaciones On-Premise Críticas</h3>
+            <p className="text-xs text-muted-foreground mb-4">Candidatas prioritarias para migración cloud</p>
             <div className="overflow-auto max-h-64">
               <table className="w-full text-sm">
                 <thead className="sticky top-0 bg-card">
                   <tr className="border-b border-border">
-                    <th className="text-left p-2">Aplicacion</th>
+                    <th className="text-left p-2">Aplicación</th>
                     <th className="text-left p-2">Criticidad</th>
                     <th className="text-left p-2">Modelo Actual</th>
                   </tr>

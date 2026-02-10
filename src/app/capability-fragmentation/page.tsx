@@ -19,7 +19,7 @@ export default function CapabilityFragmentationPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Capability Fragmentation Report" subtitle="Identificar capacidades servidas por multiples aplicaciones" />
+        <Header title="Capability Fragmentation Report" subtitle="Identificar capacidades servidas por múltiples aplicaciones" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -36,12 +36,12 @@ export default function CapabilityFragmentationPage() {
     { label: 'Capacidades Totales', value: kpis?.totalCapabilities ?? 0, icon: Layers },
     { label: 'Fragmentadas', value: kpis?.fragmentedCount ?? 0, icon: AlertTriangle, color: 'text-warning' },
     { label: 'Promedio Apps/Cap', value: kpis?.avgAppsPerCapability ?? 0, icon: BarChart3 },
-    { label: 'Max Fragmentacion', value: `${kpis?.maxFragmented ?? 0} apps`, icon: Maximize2, color: 'text-danger' },
+    { label: 'Max Fragmentación', value: `${kpis?.maxFragmented ?? 0} apps`, icon: Maximize2, color: 'text-danger' },
   ]
 
   return (
     <div className="flex-1">
-      <Header title="Capability Fragmentation Report" subtitle="Identificar capacidades servidas por multiples aplicaciones" />
+      <Header title="Capability Fragmentation Report" subtitle="Identificar capacidades servidas por múltiples aplicaciones" />
       <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {kpiCards.map((kpi) => (
@@ -49,7 +49,7 @@ export default function CapabilityFragmentationPage() {
           ))}
         </div>
 
-        <ChartContainer title="Capacidades con Mayor Fragmentacion" subtitle="Numero de aplicaciones por capacidad (top 15)" height="h-96">
+        <ChartContainer title="Capacidades con Mayor Fragmentación" subtitle="Número de aplicaciones por capacidad (top 15)" height="h-96">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data?.barChart} layout="vertical" margin={{ left: 160 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -74,8 +74,8 @@ export default function CapabilityFragmentationPage() {
         </ChartContainer>
 
         <div className="bg-card rounded-lg border border-border p-4">
-          <h3 className="font-semibold mb-1">Detalle de Fragmentacion</h3>
-          <p className="text-xs text-muted-foreground mb-4">Capacidades servidas por multiples aplicaciones — oportunidades de consolidacion</p>
+          <h3 className="font-semibold mb-1">Detalle de Fragmentación</h3>
+          <p className="text-xs text-muted-foreground mb-4">Capacidades servidas por múltiples aplicaciones — oportunidades de consolidación</p>
           <div className="overflow-auto max-h-[500px]">
             <table className="w-full text-sm">
               <thead className="sticky top-0 bg-card">
@@ -84,7 +84,7 @@ export default function CapabilityFragmentationPage() {
                   <th className="text-left p-2">Capacidad Padre</th>
                   <th className="text-right p-2"># Apps</th>
                   <th className="text-left p-2">Aplicaciones</th>
-                  <th className="text-left p-2">Tecnologias</th>
+                  <th className="text-left p-2">Tecnologías</th>
                 </tr>
               </thead>
               <tbody>

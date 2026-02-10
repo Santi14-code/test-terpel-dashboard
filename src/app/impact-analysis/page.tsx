@@ -43,7 +43,7 @@ export default function ImpactAnalysisPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Analisis de Impacto" />
+        <Header title="Análisis de Impacto" />
         <div className="p-6 space-y-6">
           <div className="bg-card rounded-lg border border-border p-4 h-16 animate-pulse" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -61,21 +61,21 @@ export default function ImpactAnalysisPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Analisis de Impacto" />
+      <Header title="Análisis de Impacto" />
       <div className="p-6 space-y-6">
 
         {/* Application Selector */}
         <div className="bg-card rounded-lg border border-border p-4">
           <div className="flex items-center gap-4">
             <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-              Seleccionar Aplicacion:
+              Seleccionar Aplicación:
             </label>
             <select
               value={selectedAppId ?? ''}
               onChange={(e) => setSelectedAppId(e.target.value ? Number(e.target.value) : null)}
               className="text-sm border border-border rounded-md px-3 py-1.5 bg-background flex-1 max-w-md"
             >
-              <option value="">-- Selecciona una aplicacion --</option>
+              <option value="">-- Selecciona una aplicación --</option>
               {data?.applications?.map((app: any) => (
                 <option key={app.id_aplicacion} value={app.id_aplicacion}>
                   {app.nombre} ({app.criticidad || 'Sin definir'})
@@ -90,10 +90,10 @@ export default function ImpactAnalysisPage() {
           <div className="bg-card rounded-lg border border-border p-12 text-center">
             <Crosshair size={48} className="mx-auto text-muted-foreground/50 mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">
-              Selecciona una aplicacion
+              Selecciona una aplicación
             </h3>
             <p className="text-sm text-muted-foreground">
-              Usa el selector de arriba para elegir una aplicacion y generar su analisis de impacto completo.
+              Usa el selector de arriba para elegir una aplicación y generar su análisis de impacto completo.
             </p>
           </div>
         )}
@@ -193,8 +193,8 @@ export default function ImpactAnalysisPage() {
 
             {/* Section 2: Impact Dimensions KPIs */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              <KPICard label="Modulos Funcionales" value={formatNumber(data.dimensions.modulesCount)} icon={Puzzle} />
-              <KPICard label="Interfaces de Integracion" value={formatNumber(data.dimensions.interfacesCount)} icon={Link2} />
+              <KPICard label="Módulos Funcionales" value={formatNumber(data.dimensions.modulesCount)} icon={Puzzle} />
+              <KPICard label="Interfaces de Integración" value={formatNumber(data.dimensions.interfacesCount)} icon={Link2} />
               <KPICard label="Procesos de Negocio" value={formatNumber(data.dimensions.processesCount)} icon={GitBranch} />
               <KPICard label="Tecnologias" value={formatNumber(data.dimensions.technologiesCount)} icon={Cpu} />
               <KPICard label="Comp. Datos Personales" value={formatNumber(data.dimensions.personalDataComponents)} icon={Database} />
@@ -259,7 +259,7 @@ export default function ImpactAnalysisPage() {
                       <tr className="border-b border-border">
                         <th className="text-left p-2">Interfaz</th>
                         <th className="text-left p-2">Tipo</th>
-                        <th className="text-left p-2">Aplicacion Proveedora</th>
+                        <th className="text-left p-2">Aplicación Proveedora</th>
                         <th className="text-left p-2">Componente Consumidor</th>
                       </tr>
                     </thead>
@@ -305,7 +305,7 @@ export default function ImpactAnalysisPage() {
                               <tr className="border-b border-border">
                                 <th className="text-left p-2 text-xs">Subproceso</th>
                                 <th className="text-left p-2 text-xs">Proceso</th>
-                                <th className="text-left p-2 text-xs">Relacion</th>
+                                <th className="text-left p-2 text-xs">Relación</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -333,7 +333,7 @@ export default function ImpactAnalysisPage() {
             {/* Section 5: Functional Modules */}
             {data.functionalModules?.length > 0 && (
               <div className="bg-card rounded-lg border border-border p-4">
-                <h3 className="text-sm font-semibold text-foreground mb-3">Modulos Funcionales</h3>
+                <h3 className="text-sm font-semibold text-foreground mb-3">Módulos Funcionales</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {data.functionalModules.map((group: any) => (
                     <div key={group.tipo} className="border border-border/50 rounded-md p-3">
@@ -365,7 +365,7 @@ export default function ImpactAnalysisPage() {
             {/* Section 6: Technology Considerations */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="bg-card rounded-lg border border-border p-4">
-                <h3 className="text-sm font-semibold text-foreground mb-3">Consideraciones Tecnologicas</h3>
+                <h3 className="text-sm font-semibold text-foreground mb-3">Consideraciones Tecnológicas</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-muted-foreground">Modelo de Servicio:</span>
@@ -377,7 +377,7 @@ export default function ImpactAnalysisPage() {
                     )}
                   </div>
                   <div>
-                    <span className="text-xs text-muted-foreground">Tecnologias utilizadas:</span>
+                    <span className="text-xs text-muted-foreground">Tecnologías utilizadas:</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {data.technologyConsiderations.technologies?.map((tech: any, i: number) => (
                         <span key={i} className="px-2 py-0.5 rounded text-xs bg-muted">
@@ -385,7 +385,7 @@ export default function ImpactAnalysisPage() {
                         </span>
                       ))}
                       {(!data.technologyConsiderations.technologies || data.technologyConsiderations.technologies.length === 0) && (
-                        <span className="text-xs text-muted-foreground">Sin tecnologias registradas</span>
+                        <span className="text-xs text-muted-foreground">Sin tecnologías registradas</span>
                       )}
                     </div>
                   </div>
@@ -423,7 +423,7 @@ export default function ImpactAnalysisPage() {
 
             {/* Section 7: Effort Estimation */}
             <div className="bg-card rounded-lg border border-border p-4">
-              <h3 className="text-sm font-semibold text-foreground mb-3">Estimacion de Esfuerzo</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-3">Estimación de Esfuerzo</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="text-center p-3 rounded-lg bg-muted/30">
                   <Clock size={16} className="mx-auto text-primary mb-1" />
@@ -453,7 +453,7 @@ export default function ImpactAnalysisPage() {
                   <thead>
                     <tr className="border-b border-border">
                       <th className="text-left p-2">Fase</th>
-                      <th className="text-left p-2">Duracion (semanas)</th>
+                      <th className="text-left p-2">Duración (semanas)</th>
                       <th className="text-left p-2">Riesgos Principales</th>
                     </tr>
                   </thead>
@@ -473,7 +473,7 @@ export default function ImpactAnalysisPage() {
             {/* Section 8: Risk Assessment */}
             {data.riskAssessment?.length > 0 && (
               <div className="bg-card rounded-lg border border-border p-4">
-                <h3 className="text-sm font-semibold text-foreground mb-3">Evaluacion de Riesgos</h3>
+                <h3 className="text-sm font-semibold text-foreground mb-3">Evaluación de Riesgos</h3>
                 <div className="overflow-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -482,7 +482,7 @@ export default function ImpactAnalysisPage() {
                         <th className="text-left p-2">Riesgo</th>
                         <th className="text-left p-2">Probabilidad</th>
                         <th className="text-left p-2">Impacto</th>
-                        <th className="text-left p-2">Mitigacion</th>
+                        <th className="text-left p-2">Mitigación</th>
                       </tr>
                     </thead>
                     <tbody>

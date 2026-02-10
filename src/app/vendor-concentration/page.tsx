@@ -28,7 +28,7 @@ function TreemapContent({ x, y, width, height, name, criticalPercent }: any) {
             {name?.length > Math.floor(width / 7) ? name.slice(0, Math.floor(width / 7)) + '...' : name}
           </text>
           <text x={x + width / 2} y={y + height / 2 + 10} textAnchor="middle" fontSize={9} fill="#fff" fillOpacity={0.8}>
-            {criticalPercent}% criticas
+            {criticalPercent}% críticas
           </text>
         </>
       )}
@@ -59,7 +59,7 @@ export default function VendorConcentrationPage() {
     { label: 'Proveedores', value: kpis?.totalVendors ?? 0, icon: Building2 },
     { label: 'Aplicaciones', value: kpis?.totalApps ?? 0, icon: Users },
     { label: 'Vendors Alto Riesgo', value: kpis?.highRiskVendors ?? 0, icon: AlertTriangle, color: 'text-danger' },
-    { label: 'Concentracion Top 1', value: formatPercent(kpis?.concentrationIndex ?? 0, 0), icon: Percent },
+    { label: 'Concentración Top 1', value: formatPercent(kpis?.concentrationIndex ?? 0, 0), icon: Percent },
   ]
 
   return (
@@ -74,7 +74,7 @@ export default function VendorConcentrationPage() {
 
         {/* Treemap */}
         {data?.treemapData?.length > 0 && (
-          <ChartContainer title="Mapa de Concentracion por Proveedor" subtitle="Tamano = # apps | Color = % apps criticas (rojo = alto)" height="h-96">
+          <ChartContainer title="Mapa de Concentración por Proveedor" subtitle="Tamaño = # apps | Color = % apps criticas (rojo = alto)" height="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <Treemap data={data.treemapData} dataKey="value" nameKey="name"
                 content={<TreemapContent />}>
@@ -85,7 +85,7 @@ export default function VendorConcentrationPage() {
                     <div className="bg-card border border-border rounded p-2 text-xs">
                       <p className="font-semibold">{d.name}</p>
                       <p>{d.value} aplicaciones</p>
-                      <p>{d.criticalPercent}% criticas</p>
+                      <p>{d.criticalPercent}% críticas</p>
                     </div>
                   )
                 }} />
@@ -107,13 +107,13 @@ export default function VendorConcentrationPage() {
                 return (
                   <div className="bg-card border border-border rounded p-2 text-xs">
                     <p className="font-semibold">{d.fullName}</p>
-                    <p>Total: {d.totalApps} | Criticas: {d.criticalApps} | Altas: {d.highApps}</p>
+                    <p>Total: {d.totalApps} | Críticas: {d.criticalApps} | Altas: {d.highApps}</p>
                     <p>Componentes: {d.components}</p>
                   </div>
                 )
               }} />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar dataKey="criticalApps" stackId="a" fill={CRITICALITY_COLORS['Crítica']} name="Criticas" />
+              <Bar dataKey="criticalApps" stackId="a" fill={CRITICALITY_COLORS['Crítica']} name="Críticas" />
               <Bar dataKey="highApps" stackId="a" fill={CRITICALITY_COLORS['Alta']} name="Altas" />
               <Bar dataKey="totalApps" fill={CHART_COLORS[2]} name="Total Apps" />
             </BarChart>
@@ -124,15 +124,15 @@ export default function VendorConcentrationPage() {
         {data?.highRiskVendors?.length > 0 && (
           <div className="bg-card rounded-lg border border-red-500/30 p-4">
             <h3 className="font-semibold mb-1">Proveedores de Alto Riesgo</h3>
-            <p className="text-xs text-muted-foreground mb-4">Vendors con 30% o mas de apps criticas</p>
+            <p className="text-xs text-muted-foreground mb-4">Vendors con 30% o más de apps críticas</p>
             <div className="overflow-auto max-h-64">
               <table className="w-full text-sm">
                 <thead className="sticky top-0 bg-card">
                   <tr className="border-b border-border">
                     <th className="text-left p-2">Proveedor</th>
                     <th className="text-right p-2">Apps Totales</th>
-                    <th className="text-right p-2">Apps Criticas</th>
-                    <th className="text-right p-2">% Criticas</th>
+                    <th className="text-right p-2">Apps Críticas</th>
+                    <th className="text-right p-2">% Críticas</th>
                   </tr>
                 </thead>
                 <tbody>

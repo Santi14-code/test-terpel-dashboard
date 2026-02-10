@@ -77,7 +77,7 @@ export default function GovernancePage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <ChartContainer title="Heat Map: Criticidad vs Estado" subtitle="Numero de apps">
+          <ChartContainer title="Heat Map: Criticidad vs Estado" subtitle="Número de apps">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart margin={{ left: 20, bottom: 20 }}>
                 <XAxis dataKey="estado" type="category" name="Estado" tick={{ fontSize: 10 }} />
@@ -101,7 +101,7 @@ export default function GovernancePage() {
           </ChartContainer>
         </div>
 
-        <ChartContainer title="Redundancia Tecnologica" subtitle="Top 20 tecnologias por componentes">
+        <ChartContainer title="Redundancia Tecnológica" subtitle="Top 20 tecnologías por componentes">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data?.techRedundancy} margin={{ bottom: 60 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -116,7 +116,7 @@ export default function GovernancePage() {
         <div className="bg-card rounded-lg border border-border p-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold">Inventario de Aplicaciones</h3>
-            <input type="text" placeholder="Buscar aplicacion..." value={search} onChange={(e) => setSearch(e.target.value)}
+            <input type="text" placeholder="Buscar aplicación..." value={search} onChange={(e) => setSearch(e.target.value)}
               className="px-3 py-1.5 text-sm border border-border rounded-md bg-background" />
           </div>
           <div className="overflow-auto max-h-96">

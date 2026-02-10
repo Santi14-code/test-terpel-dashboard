@@ -31,7 +31,7 @@ export default function ExecutiveSummaryPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Executive Summary Dashboard" subtitle="Vista panoramica del estado de la arquitectura empresarial" />
+        <Header title="Executive Summary Dashboard" subtitle="Vista panorámica del estado de la arquitectura empresarial" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -45,11 +45,11 @@ export default function ExecutiveSummaryPage() {
 
   const kpis = data?.kpis
   const kpiCards = [
-    { label: 'Aplicaciones', value: `${formatNumber(kpis?.totalApps ?? 0)} (${formatPercent(kpis?.criticalPercent ?? 0, 0)} criticas)`, icon: Monitor },
-    { label: 'Componentes Logicos', value: formatNumber(kpis?.totalComponents ?? 0), icon: Puzzle },
+    { label: 'Aplicaciones', value: `${formatNumber(kpis?.totalApps ?? 0)} (${formatPercent(kpis?.criticalPercent ?? 0, 0)} críticas)`, icon: Monitor },
+    { label: 'Componentes Lógicos', value: formatNumber(kpis?.totalComponents ?? 0), icon: Puzzle },
     { label: 'Interfaces Activas', value: formatNumber(kpis?.activeInterfaces ?? 0), icon: Plug },
     { label: 'Cloud vs On-Premise', value: formatPercent(kpis?.cloudPercent ?? 0, 0) + ' Cloud', icon: Cloud },
-    { label: 'Tecnologias Unicas', value: formatNumber(kpis?.uniqueTechs ?? 0), icon: Cpu },
+    { label: 'Tecnologías Únicas', value: formatNumber(kpis?.uniqueTechs ?? 0), icon: Cpu },
     { label: 'Cobertura Macroprocesos', value: formatPercent(kpis?.macroprocessCoverage ?? 0, 0), icon: Layers },
   ]
 
@@ -58,7 +58,7 @@ export default function ExecutiveSummaryPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Executive Summary Dashboard" subtitle="Vista panoramica del estado de la arquitectura empresarial" />
+      <Header title="Executive Summary Dashboard" subtitle="Vista panorámica del estado de la arquitectura empresarial" />
       <div className="p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -69,7 +69,7 @@ export default function ExecutiveSummaryPage() {
 
         {/* Row 2: Criticality Donut + Heatmap */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <ChartContainer title="Distribucion por Criticidad" subtitle="Clasificacion de aplicaciones">
+          <ChartContainer title="Distribución por Criticidad" subtitle="Clasificación de aplicaciones">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -95,7 +95,7 @@ export default function ExecutiveSummaryPage() {
           </ChartContainer>
 
           <ChartContainer
-            title="Top 5 Macroprocesos x Top 5 Tecnologias"
+            title="Top 5 Macroprocesos x Top 5 Tecnologías"
             subtitle="Cantidad de componentes vinculados"
             className="lg:col-span-2"
           >

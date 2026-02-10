@@ -34,7 +34,7 @@ export default function TechStackAnalyzerPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Technology Stack Analyzer" subtitle="Analisis detallado del uso de cada tecnologia en el portafolio" />
+        <Header title="Technology Stack Analyzer" subtitle="Análisis detallado del uso de cada tecnología en el portafolio" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -48,10 +48,10 @@ export default function TechStackAnalyzerPage() {
 
   const kpis = data?.kpis
   const kpiCards = [
-    { label: 'Tecnologias en Uso', value: kpis?.totalTechs ?? 0, icon: Cpu },
-    { label: 'Categorias', value: kpis?.totalCategories ?? 0, icon: Layers },
-    { label: 'Techs Huerfanas', value: kpis?.orphanCount ?? 0, icon: AlertTriangle, color: 'text-warning' },
-    { label: 'Multi-Version', value: kpis?.multiVersionCount ?? 0, icon: GitBranch, color: 'text-info' },
+    { label: 'Tecnologías en Uso', value: kpis?.totalTechs ?? 0, icon: Cpu },
+    { label: 'Categorías', value: kpis?.totalCategories ?? 0, icon: Layers },
+    { label: 'Techs Huérfanas', value: kpis?.orphanCount ?? 0, icon: AlertTriangle, color: 'text-warning' },
+    { label: 'Multi-Versión', value: kpis?.multiVersionCount ?? 0, icon: GitBranch, color: 'text-info' },
   ]
 
   const filteredTechTable = categoryFilter === 'all'
@@ -65,7 +65,7 @@ export default function TechStackAnalyzerPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Technology Stack Analyzer" subtitle="Analisis detallado del uso de cada tecnologia en el portafolio" />
+      <Header title="Technology Stack Analyzer" subtitle="Análisis detallado del uso de cada tecnología en el portafolio" />
       <div className="p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -76,7 +76,7 @@ export default function TechStackAnalyzerPage() {
 
         {/* Row 2: Category Distribution + Heatmap */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <ChartContainer title="Distribucion por Categoria" subtitle="Componentes por categoria de tecnologia">
+          <ChartContainer title="Distribución por Categoría" subtitle="Componentes por categoría de tecnología">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data?.categoryDistribution} layout="vertical" margin={{ left: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -89,8 +89,8 @@ export default function TechStackAnalyzerPage() {
           </ChartContainer>
 
           <ChartContainer
-            title="Top 10 Tecnologias x Top 10 Aplicaciones"
-            subtitle="Componentes por interseccion"
+            title="Top 10 Tecnologías x Top 10 Aplicaciones"
+            subtitle="Componentes por intersección"
             className="lg:col-span-2"
           >
             {heatmap && heatmap.technologies?.length > 0 ? (
@@ -145,7 +145,7 @@ export default function TechStackAnalyzerPage() {
               <div className="bg-card rounded-lg border border-yellow-500/30 p-4">
                 <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                   <AlertTriangle size={14} className="text-yellow-500" />
-                  Tecnologias Huerfanas
+                  Tecnologías Huérfanas
                 </h4>
                 <p className="text-xs text-muted-foreground mb-2">Solo 1 componente las usa</p>
                 <ul className="text-xs space-y-1 max-h-32 overflow-auto">
@@ -162,9 +162,9 @@ export default function TechStackAnalyzerPage() {
               <div className="bg-card rounded-lg border border-blue-500/30 p-4">
                 <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                   <GitBranch size={14} className="text-blue-500" />
-                  Multiples Versiones
+                  Múltiples Versiones
                 </h4>
-                <p className="text-xs text-muted-foreground mb-2">Tecnologias con mas de 1 version en uso</p>
+                <p className="text-xs text-muted-foreground mb-2">Tecnologías con más de 1 versión en uso</p>
                 <ul className="text-xs space-y-1 max-h-32 overflow-auto">
                   {data.alerts.multiVersionTechs.map((t: any, i: number) => (
                     <li key={i} className="flex justify-between gap-2">
@@ -179,12 +179,12 @@ export default function TechStackAnalyzerPage() {
               <div className="bg-card rounded-lg border border-red-500/30 p-4">
                 <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                   <AlertTriangle size={14} className="text-red-500" />
-                  Riesgo: App Critica Unica
+                  Riesgo: App Crítica Única
                 </h4>
-                <p className="text-xs text-muted-foreground mb-2">Tecnologias en apps criticas sin alternativa</p>
+                <p className="text-xs text-muted-foreground mb-2">Tecnologías en apps críticas sin alternativa</p>
                 <ul className="text-xs space-y-1 max-h-32 overflow-auto">
                   {data.alerts.criticalSingleTech.map((t: any, i: number) => (
-                    <li key={i}>{t.name} ({t.criticalApps} criticas)</li>
+                    <li key={i}>{t.name} ({t.criticalApps} críticas)</li>
                   ))}
                 </ul>
               </div>
@@ -196,8 +196,8 @@ export default function TechStackAnalyzerPage() {
         <div className="bg-card rounded-lg border border-border p-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-semibold">Inventario de Tecnologias</h3>
-              <p className="text-xs text-muted-foreground">Detalle por tecnologia con componentes, aplicaciones y criticidad</p>
+              <h3 className="font-semibold">Inventario de Tecnologías</h3>
+              <p className="text-xs text-muted-foreground">Detalle por tecnología con componentes, aplicaciones y criticidad</p>
             </div>
             <select
               value={categoryFilter}
@@ -205,7 +205,7 @@ export default function TechStackAnalyzerPage() {
               className="text-xs bg-muted border border-border rounded px-2 py-1"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat}>{cat === 'all' ? 'Todas las categorias' : cat}</option>
+                <option key={cat} value={cat}>{cat === 'all' ? 'Todas las categorías' : cat}</option>
               ))}
             </select>
           </div>
@@ -213,11 +213,11 @@ export default function TechStackAnalyzerPage() {
             <table className="w-full text-sm">
               <thead className="sticky top-0 bg-card">
                 <tr className="border-b border-border">
-                  <th className="text-left p-2">Tecnologia</th>
-                  <th className="text-left p-2">Categoria</th>
+                  <th className="text-left p-2">Tecnología</th>
+                  <th className="text-left p-2">Categoría</th>
                   <th className="text-right p-2">Componentes</th>
                   <th className="text-right p-2">Apps</th>
-                  <th className="text-right p-2">Apps Criticas</th>
+                  <th className="text-right p-2">Apps Críticas</th>
                   <th className="text-left p-2">Max Criticidad</th>
                   <th className="text-left p-2">Versiones</th>
                 </tr>

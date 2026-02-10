@@ -16,8 +16,8 @@ const RING_COLORS: Record<string, string> = {
 }
 
 const RING_LABELS: Record<string, string> = {
-  Adopt: 'Adoptar — Estandar corporativo',
-  Trial: 'Probar — En evaluacion activa',
+  Adopt: 'Adoptar — Estándar corporativo',
+  Trial: 'Probar — En evaluación activa',
   Assess: 'Evaluar — Uso limitado',
   Hold: 'Mantener — Evitar nuevos usos',
 }
@@ -31,7 +31,7 @@ export default function TechRadarPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Technology Radar" subtitle="Clasificacion de tecnologias por nivel de adopcion (Adopt / Trial / Assess / Hold)" />
+        <Header title="Technology Radar" subtitle="Clasificación de tecnologías por nivel de adopción (Adopt / Trial / Assess / Hold)" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -52,7 +52,7 @@ export default function TechRadarPage() {
   })
 
   const kpiCards = [
-    { label: 'Total Tecnologias', value: kpis?.totalTechs ?? 0, icon: Cpu },
+    { label: 'Total Tecnologías', value: kpis?.totalTechs ?? 0, icon: Cpu },
     { label: 'Adopt', value: kpis?.Adopt ?? 0, icon: CheckCircle, color: 'text-success' },
     { label: 'Trial', value: kpis?.Trial ?? 0, icon: FlaskConical, color: 'text-info' },
     { label: 'Assess', value: kpis?.Assess ?? 0, icon: Search, color: 'text-warning' },
@@ -64,7 +64,7 @@ export default function TechRadarPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Technology Radar" subtitle="Clasificacion de tecnologias por nivel de adopcion (Adopt / Trial / Assess / Hold)" />
+      <Header title="Technology Radar" subtitle="Clasificación de tecnologías por nivel de adopción (Adopt / Trial / Assess / Hold)" />
       <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {kpiCards.map((kpi) => (
@@ -73,7 +73,7 @@ export default function TechRadarPage() {
         </div>
 
         {/* Radar Visualization */}
-        <ChartContainer title="Radar de Tecnologias" subtitle="Centro = mayor adopcion | Exterior = menor adopcion" height="h-[550px]">
+        <ChartContainer title="Radar de Tecnologías" subtitle="Centro = mayor adopción | Exterior = menor adopción" height="h-[550px]">
           <div className="w-full h-full flex items-center justify-center">
             <svg viewBox="-250 -250 500 500" className="w-full h-full max-w-[550px] max-h-[550px]">
               {/* Concentric rings */}
@@ -164,11 +164,11 @@ export default function TechRadarPage() {
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b border-border">
-                      <th className="text-left p-2">Tecnologia</th>
-                      <th className="text-left p-2">Categoria</th>
+                      <th className="text-left p-2">Tecnología</th>
+                      <th className="text-left p-2">Categoría</th>
                       <th className="text-right p-2">Componentes</th>
                       <th className="text-right p-2">Apps</th>
-                      <th className="text-center p-2">En App Critica</th>
+                      <th className="text-center p-2">En App Crítica</th>
                     </tr>
                   </thead>
                   <tbody>

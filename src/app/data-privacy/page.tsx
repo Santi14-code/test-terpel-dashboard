@@ -34,7 +34,7 @@ export default function DataPrivacyPage() {
   const kpiCards = [
     { label: 'Componentes con DP', value: kpis?.componentsWithPD ?? 0, icon: Database },
     { label: 'Apps con DP', value: kpis?.appsWithPD ?? 0, icon: Database },
-    { label: 'Apps Criticas con DP', value: kpis?.criticalAppsWithPD ?? 0, icon: ShieldAlert, color: 'text-danger' },
+    { label: 'Apps Críticas con DP', value: kpis?.criticalAppsWithPD ?? 0, icon: ShieldAlert, color: 'text-danger' },
     { label: 'En Cloud', value: formatPercent(kpis?.cloudPercent ?? 0, 0), icon: Cloud },
     { label: 'Sin Responsable', value: kpis?.noResponsible ?? 0, icon: UserX, color: 'text-warning' },
   ]
@@ -88,11 +88,11 @@ export default function DataPrivacyPage() {
                   <span className="font-semibold text-orange-400">{data?.risks?.cloudWithPD ?? 0}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Criticas sin responsable</span>
+                  <span className="text-muted-foreground">Críticas sin responsable</span>
                   <span className="font-semibold text-red-400">{data?.risks?.criticalNoResponsible ?? 0}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Alta exposicion (&gt;3 consumidores)</span>
+                  <span className="text-muted-foreground">Alta exposición (&gt;3 consumidores)</span>
                   <span className="font-semibold text-yellow-400">{data?.risks?.highExposure ?? 0}</span>
                 </div>
               </div>
@@ -109,10 +109,10 @@ export default function DataPrivacyPage() {
               <thead className="sticky top-0 bg-card">
                 <tr className="border-b border-border">
                   <th className="text-left p-2">Componente</th>
-                  <th className="text-left p-2">Aplicacion</th>
+                  <th className="text-left p-2">Aplicación</th>
                   <th className="text-left p-2">Criticidad</th>
                   <th className="text-left p-2">Modelo</th>
-                  <th className="text-left p-2">Tecnologia</th>
+                  <th className="text-left p-2">Tecnología</th>
                   <th className="text-left p-2">Responsable</th>
                   <th className="text-left p-2">Plataformas</th>
                   <th className="text-right p-2">Consumidores</th>
