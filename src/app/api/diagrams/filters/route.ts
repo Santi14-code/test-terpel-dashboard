@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get tipos de línea if lineaPrincipal is specified
-    let tiposLinea = []
+    let tiposLinea: Awaited<ReturnType<typeof prisma.cat_linea_negocio.findMany>> = []
     if (lineaPrincipalId) {
       tiposLinea = await prisma.cat_linea_negocio.findMany({
         where: {

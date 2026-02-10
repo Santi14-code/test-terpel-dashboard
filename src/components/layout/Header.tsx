@@ -5,7 +5,7 @@ import { useFilterStore } from '@/store/filterStore'
 import { useAlertStore } from '@/store/alertStore'
 import { GlobalFilters } from './GlobalFilters'
 
-export function Header({ title }: { title: string }) {
+export function Header({ title, subtitle }: { title: string; subtitle?: string }) {
   const { searchQuery, setSearchQuery, resetFilters } = useFilterStore()
   const { alerts, togglePanel } = useAlertStore()
   const activeAlerts = alerts.filter((a) => !a.dismissed)
@@ -13,7 +13,10 @@ export function Header({ title }: { title: string }) {
   return (
     <header className="bg-card border-b border-border sticky top-0 z-30">
       <div className="flex items-center justify-between px-6 py-3">
-        <h1 className="text-lg font-semibold text-foreground">{title}</h1>
+        <div>
+          <h1 className="text-lg font-semibold text-foreground">{title}</h1>
+          {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+        </div>
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />

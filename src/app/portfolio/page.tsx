@@ -75,11 +75,11 @@ export default function PortfolioPage() {
   const kpis = data?.kpis
   const kpiCards = [
     { label: 'Total Aplicaciones', value: formatNumber(kpis?.totalApps ?? 0), icon: Monitor },
-    { label: 'Componentes Logicos', value: formatNumber(kpis?.totalComponents ?? 0), icon: Puzzle },
+    { label: 'Componentes Lógicos', value: formatNumber(kpis?.totalComponents ?? 0), icon: Puzzle },
     { label: 'Interfaces Activas', value: formatNumber(kpis?.totalInterfaces ?? 0), icon: Link2 },
     { label: 'Apps SaaS', value: `${kpis?.saasCount ?? 0} (${kpis?.saasPercent ?? 0}%)`, icon: Cloud },
     { label: 'Apps On-Premise', value: `${kpis?.onPremCount ?? 0} (${kpis?.onPremPercent ?? 0}%)`, icon: Server },
-    { label: 'Apps Criticas', value: `${kpis?.criticalCount ?? 0} (${kpis?.criticalPercent ?? 0}%)`, icon: AlertTriangle },
+    { label: 'Apps Críticas', value: `${kpis?.criticalCount ?? 0} (${kpis?.criticalPercent ?? 0}%)`, icon: AlertTriangle },
   ]
 
   const handleSort = (key: string) => {
@@ -104,7 +104,7 @@ export default function PortfolioPage() {
 
         {/* Row 2: Three Pie Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <ChartContainer title="Distribucion por Criticidad">
+          <ChartContainer title="Distribución por Criticidad">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.byCriticidad} cx="50%" cy="50%" innerRadius={50} outerRadius={90} dataKey="value" nameKey="name"
@@ -118,7 +118,7 @@ export default function PortfolioPage() {
             </ResponsiveContainer>
           </ChartContainer>
 
-          <ChartContainer title="Distribucion por Modelo de Servicio">
+          <ChartContainer title="Distribución por Modelo de Servicio">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.byModelo} cx="50%" cy="50%" innerRadius={50} outerRadius={90} dataKey="value" nameKey="name"
@@ -132,7 +132,7 @@ export default function PortfolioPage() {
             </ResponsiveContainer>
           </ChartContainer>
 
-          <ChartContainer title="Distribucion por Estado">
+          <ChartContainer title="Distribución por Estado">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.byEstado} cx="50%" cy="50%" innerRadius={50} outerRadius={90} dataKey="value" nameKey="name"
@@ -163,7 +163,7 @@ export default function PortfolioPage() {
             </ResponsiveContainer>
           </ChartContainer>
 
-          <ChartContainer title="Apps Mas Integradas" subtitle="Por numero de interfaces">
+          <ChartContainer title="Apps Más Integradas" subtitle="Por número de interfaces">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data?.topByIntegration} layout="vertical" margin={{ left: 120 }}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -177,7 +177,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Row 4: Apps by Provider */}
-        <ChartContainer title="Apps por Fabricante" subtitle="Distribucion por proveedor de tecnologia">
+        <ChartContainer title="Apps por Fabricante" subtitle="Distribución por proveedor de tecnología">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data?.byProvider} margin={{ bottom: 60 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -249,7 +249,7 @@ export default function PortfolioPage() {
         <div className="bg-card rounded-lg border border-border p-4">
           <div className="flex items-center gap-2 mb-4">
             <Heart size={16} className="text-primary" />
-            <h3 className="font-semibold">Metricas de Salud del Portafolio</h3>
+            <h3 className="font-semibold">Métricas de Salud del Portafolio</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {data?.healthMetrics?.map((metric: { label: string; value: number; suffix: string }, i: number) => (

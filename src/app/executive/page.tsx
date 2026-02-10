@@ -35,11 +35,11 @@ export default function ExecutivePage() {
   const kpiCards = [
     { label: 'Aplicaciones', value: formatNumber(kpis?.apps ?? 0), icon: Monitor },
     { label: 'Componentes', value: formatNumber(kpis?.componentes ?? 0), icon: Puzzle },
-    { label: 'Tecnologias', value: formatNumber(kpis?.tecnologias ?? 0), icon: Cpu },
+    { label: 'Tecnologías', value: formatNumber(kpis?.tecnologias ?? 0), icon: Cpu },
     { label: 'TCO Estimado', value: formatCurrency(kpis?.totalTCO ?? 0), icon: DollarSign },
-    { label: 'Deuda Tecnica', value: `${kpis?.avgDebt ?? 0}/100`, icon: AlertTriangle },
+    { label: 'Deuda Técnica', value: `${kpis?.avgDebt ?? 0}/100`, icon: AlertTriangle },
     { label: 'Cloud Adoption', value: formatPercent(kpis?.cloudAdoption ?? 0, 0), icon: Cloud },
-    { label: 'Documentacion', value: formatPercent(kpis?.docCoverage ?? 0, 0), icon: FileText },
+    { label: 'Documentación', value: formatPercent(kpis?.docCoverage ?? 0, 0), icon: FileText },
     { label: 'Cobertura', value: formatPercent(kpis?.overallCoverage ?? 0, 0), icon: Target },
   ]
 
@@ -54,7 +54,7 @@ export default function ExecutivePage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <ChartContainer title="Criticidad" subtitle="Distribucion de aplicaciones">
+          <ChartContainer title="Criticidad" subtitle="Distribución de aplicaciones">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.criticality} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" nameKey="name"
@@ -68,7 +68,7 @@ export default function ExecutivePage() {
             </ResponsiveContainer>
           </ChartContainer>
 
-          <ChartContainer title="Modelo de Servicio" subtitle="Distribucion de aplicaciones">
+          <ChartContainer title="Modelo de Servicio" subtitle="Distribución de aplicaciones">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={data?.modelDistribution} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" nameKey="name"

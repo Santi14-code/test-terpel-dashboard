@@ -115,7 +115,10 @@ export default function GeneradorPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Generador de Diagramas</h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Diagram Generator</h1>
+          <p className="text-sm text-muted-foreground">Genera diagramas de arquitectura empresarial desde la base de datos usando PlantUML</p>
+        </div>
       </div>
 
       {/* Filters Section */}
