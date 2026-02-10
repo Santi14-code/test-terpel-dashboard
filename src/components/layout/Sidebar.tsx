@@ -36,8 +36,8 @@ const navGroups: NavGroup[] = [
     items: [
       { name: 'Executive Summary', href: '/', icon: BarChart3 },
       { name: 'Strategic Risk Matrix', href: '/strategic-risk-matrix', icon: ShieldCheck },
-      { name: 'Cloud Transformation', href: '/coming-soon/cloud-transformation-tracker', icon: Cloud },
-      { name: 'Vendor Concentration', href: '/coming-soon/vendor-concentration-dashboard', icon: Building2 },
+      { name: 'Cloud Transformation', href: '/cloud-transformation', icon: Cloud },
+      { name: 'Vendor Concentration', href: '/vendor-concentration', icon: Building2 },
       { name: 'Business Capability', href: '/coming-soon/business-capability-heat-map', icon: Flame },
       { name: 'Tech Investment', href: '/coming-soon/technology-investment-portfolio', icon: TrendingUp },
     ],
@@ -48,11 +48,11 @@ const navGroups: NavGroup[] = [
     defaultExpanded: false,
     items: [
       { name: 'Integration Complexity', href: '/coming-soon/integration-complexity-map', icon: Share2 },
-      { name: 'App Portfolio Matrix', href: '/coming-soon/application-portfolio-matrix', icon: LayoutGrid },
-      { name: 'Technology Radar', href: '/coming-soon/technology-radar', icon: Cpu },
+      { name: 'App Portfolio Matrix', href: '/portfolio-matrix', icon: LayoutGrid },
+      { name: 'Technology Radar', href: '/tech-radar', icon: Cpu },
       { name: 'Modernization Pipeline', href: '/coming-soon/modernization-pipeline', icon: ArrowUpCircle },
       { name: 'Multi-Cloud Distribution', href: '/coming-soon/multi-cloud-distribution-dashboard', icon: Globe },
-      { name: 'Capability Fragmentation', href: '/coming-soon/capability-fragmentation-report', icon: PieChart },
+      { name: 'Capability Fragmentation', href: '/capability-fragmentation', icon: PieChart },
     ],
   },
   {
@@ -60,10 +60,10 @@ const navGroups: NavGroup[] = [
     name: 'Operativo',
     defaultExpanded: false,
     items: [
-      { name: 'App Deep Dive', href: '/coming-soon/application-deep-dive', icon: Search },
+      { name: 'App Deep Dive', href: '/app-deep-dive', icon: Search },
       { name: 'Tech Stack Analyzer', href: '/tech-stack-analyzer', icon: Layers },
       { name: 'Deployment Architecture', href: '/coming-soon/deployment-architecture-viewer', icon: Server },
-      { name: 'Data Privacy & Compliance', href: '/coming-soon/data-privacy-compliance-tracker', icon: Lock },
+      { name: 'Data Privacy & Compliance', href: '/data-privacy', icon: Lock },
       { name: 'Interface Catalog', href: '/coming-soon/interface-catalog-explorer', icon: Plug },
       { name: 'Process Traceability', href: '/coming-soon/process-to-technology-traceability', icon: Link2 },
       { name: 'Component Lifecycle', href: '/coming-soon/component-lifecycle-dashboard', icon: Clock },
