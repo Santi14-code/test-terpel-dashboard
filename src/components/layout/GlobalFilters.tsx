@@ -29,7 +29,7 @@ export function GlobalFilters() {
   return (
     <div className="flex items-center gap-4 px-6 py-2 bg-muted/50 border-t border-border overflow-x-auto">
       <div className="flex items-center gap-2 shrink-0">
-        <label className="text-xs font-medium text-muted-foreground">Linea Principal:</label>
+        <label className="text-xs font-medium text-muted-foreground">Linea de Negocio Principal:</label>
         <select
           className="text-xs border border-border rounded px-2 py-1 bg-background"
           value={lineasNegocioPrincipal[0] ?? ''}
@@ -46,7 +46,7 @@ export function GlobalFilters() {
       </div>
 
       <div className="flex items-center gap-2 shrink-0">
-        <label className="text-xs font-medium text-muted-foreground">Tipo Linea:</label>
+        <label className="text-xs font-medium text-muted-foreground">Linea de Negocio Secundaria:</label>
         <select
           className="text-xs border border-border rounded px-2 py-1 bg-background"
           value={lineasNegocio[0] ?? ''}

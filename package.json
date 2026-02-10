@@ -10,9 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate",
-    "generate:archimate": "tsx scripts/archimate/generate-archimate.ts",
-    "generate:aviation": "tsx scripts/archimate/generate-aviation-view.ts"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
@@ -35,6 +33,7 @@
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.4",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "pg": "^8.18.0",
@@ -54,11 +53,9 @@
     "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
