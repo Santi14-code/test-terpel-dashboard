@@ -7,6 +7,7 @@ import {
   LayoutDashboard, Shield, AlertTriangle, Network, Target,
   ShieldAlert, DollarSign, Lightbulb, Activity, RefreshCw,
   Briefcase, ChevronLeft, ChevronRight, GitBranch, FolderKanban,
+  Crosshair,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -15,6 +16,7 @@ const navItems = [
   { name: 'Ejecutivo', href: '/executive', icon: Briefcase },
   { name: 'Gobernanza', href: '/governance', icon: Shield },
   { name: 'Portafolio', href: '/portfolio', icon: FolderKanban },
+  { name: 'Impacto', href: '/impact-analysis', icon: Crosshair },
   { name: 'Deuda Tecnica', href: '/technical-debt', icon: AlertTriangle },
   { name: 'Arquitectura', href: '/architecture', icon: Network },
   { name: 'Alineacion', href: '/alignment', icon: Target },

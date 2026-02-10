@@ -46,6 +46,7 @@ La aplicación estará disponible en: **http://localhost:3000**
 ### Dashboard Interactivo
 
 - **Dashboard Principal**: KPIs, criticidad de aplicaciones, tecnologías más usadas
+- **Portafolio de Aplicaciones**: Inventario completo con tabla ordenable y buscable, distribución por criticidad, modelo de servicio y estado, top 10 por complejidad e integración, métricas de salud del portafolio
 - **Alineación**: Alineación de aplicaciones con capacidades de negocio
 - **Arquitectura**: Vista de componentes y sus relaciones
 - **Gestión del Cambio**: Tracking de cambios y transformaciones
@@ -56,6 +57,7 @@ La aplicación estará disponible en: **http://localhost:3000**
 - **Performance**: Métricas de rendimiento de aplicaciones
 - **Riesgos**: Análisis de riesgos tecnológicos
 - **Deuda Técnica**: Identificación y tracking de deuda técnica
+- **Análisis de Impacto**: Evaluación dinámica del impacto de reemplazar cualquier aplicación, con score de impacto, complejidad de integraciones, procesos afectados, estimación de esfuerzo y evaluación de riesgos
 
 ### Filtros Avanzados
 
@@ -95,9 +97,12 @@ terpel-nexus-t/
 │   ├── app/                    # Next.js App Router
 │   │   ├── api/               # API Routes
 │   │   │   ├── dashboard/    # Dashboard endpoints
+│   │   │   ├── diagrams/     # Generación de diagramas
 │   │   │   └── filters/      # Filtros endpoint
 │   │   ├── alignment/        # Página de alineación
 │   │   ├── architecture/     # Página de arquitectura
+│   │   ├── impact-analysis/  # Análisis de impacto
+│   │   ├── generador/        # Generador de diagramas
 │   │   └── ...               # Otras páginas
 │   ├── components/           # Componentes React
 │   │   ├── charts/          # Componentes de gráficos
@@ -139,6 +144,8 @@ La aplicación se conecta a PostgreSQL en Azure. La configuración se hace media
 
 - **Aplicaciones**: `tbl_aplicacion`
 - **Componentes Lógicos**: `tbl_componente_logico`
+- **Interfaces**: `tbl_interfaz`, `rel_com_interfaz_consumo`
+- **Despliegues**: `tbl_componente_despliegue`, `rel_componente_log_despliegue`
 - **Tecnologías**: `cat_tecnologia`
 - **Capacidades**: `cat_capacidad` (3 niveles)
 - **Procesos**: `cat_macroproceso`, `cat_proceso`, `cat_subproceso`
@@ -253,4 +260,4 @@ Uso interno de Terpel.
 
 ---
 
-**Última actualización**: 2026-02-05
+**Última actualización**: 2026-02-09
