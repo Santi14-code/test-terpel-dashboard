@@ -71,7 +71,7 @@ interface MatrixData {
   filterOptions: {
     technologies: Array<{
       id_tecnologia: number
-      tecnologia: string
+      nombre: string
       categoria: string
     }>
     providers: string[]
@@ -99,7 +99,19 @@ export default function MatrixPage() {
 
   const { data, isLoading, error } = useQuery<MatrixData>({
     queryKey,
-    queryFn: () => fetch(url).then((r) => r.json()),
+    queryFn: async () => {
+      const response = await fetch(url)
+      if (!response.ok) {
+        throw new Error('Error al cargar los datos')
+      }
+      const json = await response.json()
+      // Validate that we have the expected structure
+      if (!json.kpis) {
+        console.error('Invalid data structure received:', json)
+        throw new Error('Estructura de datos inválida')
+      }
+      return json
+    },
   })
 
   if (isLoading) {
@@ -131,7 +143,7 @@ export default function MatrixPage() {
     )
   }
 
-  if (!data) {
+  if (!data || !data.kpis) {
     return (
       <div className="flex-1">
         <Header title="Matriz de Aplicaciones × Tecnologías" />
@@ -208,7 +220,7 @@ export default function MatrixPage() {
                 <option value="">Todas las tecnologías</option>
                 {data.filterOptions.technologies.map((tech) => (
                   <option key={tech.id_tecnologia} value={tech.id_tecnologia}>
-                    {tech.tecnologia} ({tech.categoria})
+                    {tech.nombre} ({tech.categoria})
                   </option>
                 ))}
               </select>

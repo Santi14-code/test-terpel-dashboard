@@ -21,49 +21,31 @@ export async function GET(request: NextRequest) {
 
     // Get all applications with their components and technologies
     const aplicaciones = await prisma.tbl_aplicacion.findMany({
-      where: {
-        ...appWhere,
-        ...(proveedorFilter ? { proveedor: { contains: proveedorFilter } } : {}),
-      },
-      include: {
-        tbl_componente_logico: {
-          where: componentWhere,
-          include: {
-            cat_tecnologia: {
-              select: {
-                id_tecnologia: true,
-                tecnologia: true,
-                categoria: true,
-              },
-            },
-            rel_com_interfaz_consumo: {
-              include: {
-                tbl_interfaz: {
-                  include: {
-                    tbl_componente_logico: {
-                      select: {
-                        id_aplicacion: true,
-                        tbl_aplicacion: {
-                          select: {
-                            id_aplicacion: true,
-                            nombre: true,
-                          },
-                        },
-                      },
-                    },
-                  },
+        where: {
+          ...appWhere,
+          ...(proveedorFilter ? { proveedor: { contains: proveedorFilter } } : {}),
+        },
+        include: {
+          tbl_componente_logico: {
+            where: componentWhere,
+            include: {
+              cat_tecnologia: {
+                select: {
+                  id_tecnologia: true,
+                  nombre: true,
+                  categoria: true,
                 },
               },
+              rel_com_interfaz_consumo: true,
+            },
+          },
+          cat_estado: {
+            select: {
+              nombre: true,
             },
           },
         },
-        cat_estado: {
-          select: {
-            nombre: true,
-          },
-        },
-      },
-    })
+      })
 
     // KPIs
     const totalApps = aplicaciones.length
@@ -89,7 +71,7 @@ export async function GET(request: NextRequest) {
       app.tbl_componente_logico.forEach((comp) => {
         if (comp.cat_tecnologia) {
           const techId = comp.cat_tecnologia.id_tecnologia
-          const techName = comp.cat_tecnologia.tecnologia
+          const techName = comp.cat_tecnologia.nombre
           techMap.set(techId, techName)
 
           // Count dependencies (interfaces consumed)
@@ -133,7 +115,7 @@ export async function GET(request: NextRequest) {
               c.cat_tecnologia!.id_tecnologia,
               {
                 id: c.cat_tecnologia!.id_tecnologia,
-                name: c.cat_tecnologia!.tecnologia,
+                name: c.cat_tecnologia!.nombre,
                 category: c.cat_tecnologia!.categoria,
                 componentCount: app.tbl_componente_logico.filter(
                   (comp) => comp.id_tecnologia === c.cat_tecnologia!.id_tecnologia
@@ -163,10 +145,10 @@ export async function GET(request: NextRequest) {
     aplicaciones.forEach((app) => {
       app.tbl_componente_logico.forEach((comp) => {
         if (comp.cat_tecnologia) {
-          const key = comp.cat_tecnologia.tecnologia
+          const key = comp.cat_tecnologia.nombre
           if (!techDistribution.has(key)) {
             techDistribution.set(key, {
-              name: comp.cat_tecnologia.tecnologia,
+              name: comp.cat_tecnologia.nombre,
               category: comp.cat_tecnologia.categoria,
               appCount: new Set<number>(),
               componentCount: 0,
@@ -210,11 +192,11 @@ export async function GET(request: NextRequest) {
     const allTechnologies = await prisma.cat_tecnologia.findMany({
       select: {
         id_tecnologia: true,
-        tecnologia: true,
+        nombre: true,
         categoria: true,
       },
       orderBy: {
-        tecnologia: 'asc',
+        nombre: 'asc',
       },
     })
 
