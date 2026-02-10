@@ -169,27 +169,27 @@ export default function MatrixPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <KPICard
             icon={Layers}
-            title="Total Aplicaciones"
+            label="Total Aplicaciones"
             value={data.kpis.totalApps}
-            iconColor="text-blue-500"
+            color="text-blue-500"
           />
           <KPICard
             icon={Code}
-            title="Tecnologías"
+            label="Tecnologías"
             value={data.kpis.totalTechs}
-            iconColor="text-green-500"
+            color="text-green-500"
           />
           <KPICard
             icon={Building2}
-            title="Proveedores"
+            label="Proveedores"
             value={data.kpis.totalProviders}
-            iconColor="text-purple-500"
+            color="text-purple-500"
           />
           <KPICard
             icon={AlertTriangle}
-            title="Apps Críticas"
+            label="Apps Críticas"
             value={data.kpis.criticalApps}
-            iconColor="text-red-500"
+            color="text-red-500"
           />
         </div>
 
@@ -262,8 +262,8 @@ export default function MatrixPage() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name}: ${(percent * 100).toFixed(0)}%`
+                  label={({ name, percent }: { name?: string; percent?: number }) =>
+                    `${name ?? ''}: ${((percent ?? 0) * 100).toFixed(0)}%`
                   }
                   outerRadius={80}
                   fill="#8884d8"
