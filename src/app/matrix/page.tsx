@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useFilteredQuery } from '@/hooks/useFilteredQuery'
+import { useQuery } from '@tanstack/react-query'
+import { useFilterStore } from '@/store/filterStore'
 import { Header } from '@/components/layout/Header'
 import { KPICard } from '@/components/charts/KPICard'
 import { ChartContainer } from '@/components/charts/ChartContainer'
@@ -82,16 +83,26 @@ export default function MatrixPage() {
   const [selectedProvider, setSelectedProvider] = useState<string>('')
   const [expandedApp, setExpandedApp] = useState<number | null>(null)
 
-  // Build query params
-  const additionalParams = new URLSearchParams()
-  if (selectedTech) additionalParams.set('tecnologia', selectedTech)
-  if (selectedProvider) additionalParams.set('proveedor', selectedProvider)
+  // Build complete URL with all parameters
+  const { criticidad, estados, lineasNegocioPrincipal, lineasNegocio } = useFilterStore()
 
-  const { data, isLoading } = useFilteredQuery<MatrixData>(
-    `/api/dashboard/matrix?${additionalParams.toString()}`
-  )
+  const params = new URLSearchParams()
+  if (criticidad.length) params.set('criticidad', criticidad.join(','))
+  if (estados.length) params.set('estados', estados.join(','))
+  if (lineasNegocioPrincipal.length) params.set('lineasPrincipal', lineasNegocioPrincipal.join(','))
+  if (lineasNegocio.length) params.set('lineasNegocio', lineasNegocio.join(','))
+  if (selectedTech) params.set('tecnologia', selectedTech)
+  if (selectedProvider) params.set('proveedor', selectedProvider)
 
-  if (isLoading || !data) {
+  const queryKey = ['/api/dashboard/matrix', params.toString()]
+  const url = `/api/dashboard/matrix${params.toString() ? '?' + params.toString() : ''}`
+
+  const { data, isLoading, error } = useQuery<MatrixData>({
+    queryKey,
+    queryFn: () => fetch(url).then((r) => r.json()),
+  })
+
+  if (isLoading) {
     return (
       <div className="flex-1">
         <Header title="Matriz de Aplicaciones × Tecnologías" />
@@ -102,6 +113,32 @@ export default function MatrixPage() {
             ))}
           </div>
           <div className="h-96 bg-muted animate-pulse rounded-lg" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex-1">
+        <Header title="Matriz de Aplicaciones × Tecnologías" />
+        <div className="p-6">
+          <div className="bg-destructive/10 border border-destructive rounded-lg p-4">
+            <p className="text-destructive">Error al cargar los datos. Por favor intente nuevamente.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!data) {
+    return (
+      <div className="flex-1">
+        <Header title="Matriz de Aplicaciones × Tecnologías" />
+        <div className="p-6">
+          <div className="bg-muted border rounded-lg p-4">
+            <p className="text-muted-foreground">No hay datos disponibles.</p>
+          </div>
         </div>
       </div>
     )
