@@ -31,7 +31,7 @@ export default function ExecutiveSummaryPage() {
   if (isLoading) {
     return (
       <div className="flex-1">
-        <Header title="Executive Summary Dashboard" />
+        <Header title="Executive Summary Dashboard" subtitle="Vista panoramica del estado de la arquitectura empresarial" />
         <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -58,7 +58,7 @@ export default function ExecutiveSummaryPage() {
 
   return (
     <div className="flex-1">
-      <Header title="Executive Summary Dashboard" />
+      <Header title="Executive Summary Dashboard" subtitle="Vista panoramica del estado de la arquitectura empresarial" />
       <div className="p-6 space-y-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

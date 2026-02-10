@@ -35,7 +35,7 @@ const navGroups: NavGroup[] = [
     defaultExpanded: true,
     items: [
       { name: 'Executive Summary', href: '/', icon: BarChart3 },
-      { name: 'Strategic Risk Matrix', href: '/coming-soon/strategic-risk-matrix', icon: ShieldCheck },
+      { name: 'Strategic Risk Matrix', href: '/strategic-risk-matrix', icon: ShieldCheck },
       { name: 'Cloud Transformation', href: '/coming-soon/cloud-transformation-tracker', icon: Cloud },
       { name: 'Vendor Concentration', href: '/coming-soon/vendor-concentration-dashboard', icon: Building2 },
       { name: 'Business Capability', href: '/coming-soon/business-capability-heat-map', icon: Flame },
@@ -61,7 +61,7 @@ const navGroups: NavGroup[] = [
     defaultExpanded: false,
     items: [
       { name: 'App Deep Dive', href: '/coming-soon/application-deep-dive', icon: Search },
-      { name: 'Tech Stack Analyzer', href: '/coming-soon/technology-stack-analyzer', icon: Layers },
+      { name: 'Tech Stack Analyzer', href: '/tech-stack-analyzer', icon: Layers },
       { name: 'Deployment Architecture', href: '/coming-soon/deployment-architecture-viewer', icon: Server },
       { name: 'Data Privacy & Compliance', href: '/coming-soon/data-privacy-compliance-tracker', icon: Lock },
       { name: 'Interface Catalog', href: '/coming-soon/interface-catalog-explorer', icon: Plug },
