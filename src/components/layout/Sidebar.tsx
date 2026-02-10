@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import {
-  LayoutDashboard, Shield, AlertTriangle, Network, Target,
+  Shield, AlertTriangle, Network, Target,
   ShieldAlert, DollarSign, Lightbulb, Activity, RefreshCw,
   Briefcase, ChevronLeft, ChevronRight, GitBranch, FolderKanban,
   Crosshair, Table, ChevronDown,
@@ -32,9 +32,9 @@ const navGroups: NavGroup[] = [
   {
     id: 'estrategico',
     name: 'Estrategico',
-    defaultExpanded: false,
+    defaultExpanded: true,
     items: [
-      { name: 'Executive Summary', href: '/coming-soon/executive-summary-dashboard', icon: BarChart3 },
+      { name: 'Executive Summary', href: '/', icon: BarChart3 },
       { name: 'Strategic Risk Matrix', href: '/coming-soon/strategic-risk-matrix', icon: ShieldCheck },
       { name: 'Cloud Transformation', href: '/coming-soon/cloud-transformation-tracker', icon: Cloud },
       { name: 'Vendor Concentration', href: '/coming-soon/vendor-concentration-dashboard', icon: Building2 },
@@ -75,7 +75,6 @@ const navGroups: NavGroup[] = [
     name: 'Old',
     defaultExpanded: false,
     items: [
-      { name: 'Principal', href: '/', icon: LayoutDashboard },
       { name: 'Ejecutivo', href: '/executive', icon: Briefcase },
       { name: 'Gobernanza', href: '/governance', icon: Shield },
       { name: 'Portafolio', href: '/portfolio', icon: FolderKanban },

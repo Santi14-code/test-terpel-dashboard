@@ -155,11 +155,7 @@ La aplicación se conecta a PostgreSQL en Azure. La configuración se hace media
 
 ### Variables de Entorno
 
-Crea un archivo `.env` en la raíz del proyecto:
-
-```env
-DATABASE_URL="postgresql://user:password@host:5432/database?schema=schema_name&sslmode=require"
-```
+Crea un archivo `.env` en la raíz del proyecto con la variable `DATABASE_URL` apuntando a tu instancia de PostgreSQL.
 
 ### Prisma
 
