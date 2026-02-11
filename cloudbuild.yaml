@@ -1,11 +1,17 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app'
-, '.']
+    args: [
+      'build',
+      '-t',
+      'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app',
+      '.'
+    ]
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app'
-]
+    args: [
+      'push',
+      'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app'
+    ]
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -15,7 +21,7 @@ steps:
         'deploy',
         'next-app',
         '--image',
-        'gcr.io/$PROJECT_ID/next-app',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app',
         '--region',
         'us-central1',
         '--platform',
@@ -24,7 +30,8 @@ steps:
       ]
 
 images:
-  - 'gcr.io/$PROJECT_ID/next-app'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/next-repo/next-app'
 
 options:
   logging: CLOUD_LOGGING_ONLY
+
